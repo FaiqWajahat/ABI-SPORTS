@@ -17,13 +17,11 @@ const FACILITIES = [
     phone: '+92 348 4488019',
     email: 'jamil.badar@abisportswear.com',
     driveLink: 'https://drive.google.com/drive/folders/10c4RmH5EcAQIz7P6p8j5ZXGuWWebLfzM?usp=sharing',
-    mainImage: '/active-wear.png',
+    mainImage: '/sialkot-factory.png',
     gallery: [
-      '/active-wear.png',
-      '/team-wear.png',
-      '/active-wear.png',
-      '/team-wear.png',
-      '/active-wear.png'
+      '/sialkot-factory.png',
+      '/canada-office.png',
+      '/usa-office.png'
     ]
   },
   {
@@ -36,12 +34,11 @@ const FACILITIES = [
     phone: '+1 (437) 848-9003',
     email: 'orders@abisportswear.com',
     driveLink: 'https://drive.google.com/drive/folders/1FnbF8skbxjJUCfezlU3Zx9bF3cauNmuO?usp=drive_link',
-    mainImage: '/team-wear.png',
+    mainImage: '/canada-office.png',
     gallery: [
-      '/team-wear.png',
-      '/active-wear.png',
-      '/team-wear.png',
-      '/active-wear.png'
+      '/canada-office.png',
+      '/sialkot-factory.png',
+      '/usa-office.png'
     ]
   },
   {
@@ -54,12 +51,11 @@ const FACILITIES = [
     phone: '+1 (347) 515-7182',
     email: 'orders@abisportswear.com',
     driveLink: 'https://drive.google.com/drive/folders/1J__jLVaT86BdqBRPr-2irWpuj4W_yj1v?usp=drive_link',
-    mainImage: '/active-wear.png',
+    mainImage: '/usa-office.png',
     gallery: [
-      '/active-wear.png',
-      '/team-wear.png',
-      '/active-wear.png',
-      '/team-wear.png'
+      '/usa-office.png',
+      '/sialkot-factory.png',
+      '/canada-office.png'
     ]
   }
 ];
