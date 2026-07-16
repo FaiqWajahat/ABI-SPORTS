@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
@@ -84,6 +84,107 @@ export default function ProductsClient() {
   const productParam = searchParams.get('product');
 
   const [activeFaq, setActiveFaq] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  // Reset pagination when subcategory shifts
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [subParam]);
+
+  const [dynamicCategories, setDynamicCategories] = useState(null);
+  const [dynamicProducts, setDynamicProducts] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const [catRes, prodRes] = await Promise.all([
+          fetch('/api/categories'),
+          fetch('/api/products')
+        ]);
+        if (catRes.ok && prodRes.ok) {
+          const catData = await catRes.json();
+          const prodData = await prodRes.json();
+
+          const cats = catData.categories || [];
+          const prods = prodData.products || [];
+
+          const formattedCategories = {};
+          
+          // First pass: add parent categories
+          cats.filter(c => !c.parentCategory).forEach(c => {
+            formattedCategories[c.slug] = {
+              title: c.name,
+              description: c.description || '',
+              heroImage: c.image || '/active-wear.png',
+              subcategories: {},
+              fabricTech: CATEGORIES[c.slug]?.fabricTech || [
+                { name: 'AeroDry Polyester', desc: 'Moisture-wicking micro-fiber that pulls sweat away from skin instantly.' },
+                { name: 'rPET Eco-Yarn', desc: 'Sustainable fibers certified by GRS.' }
+              ]
+            };
+          });
+
+          // Second pass: add subcategories under parent
+          cats.filter(c => c.parentCategory).forEach(c => {
+            const parentSlug = c.parentCategory.slug || (c.parentCategory.name ? c.parentCategory.slug : c.parentCategory);
+            const pSlug = typeof c.parentCategory === 'object' ? c.parentCategory.slug : parentSlug;
+            if (formattedCategories[pSlug]) {
+              formattedCategories[pSlug].subcategories[c.slug] = {
+                title: c.name,
+                description: c.description || '',
+                image: c.image || '/active-wear.png'
+              };
+            }
+          });
+
+          // Format products
+          const formattedProducts = prods.map(p => {
+            const catSlug = typeof p.category === 'object' ? p.category?.slug : p.category;
+            const subSlug = typeof p.subcategory === 'object' ? p.subcategory?.slug : p.subcategory;
+            return {
+              id: p.slug || p._id,
+              name: p.name,
+              category: catSlug || '',
+              subcategory: subSlug || '',
+              priceRange: 'OEM Bulk Quote',
+              image: p.images?.[0] || '/active-wear.png',
+              description: p.description || '',
+              specs: [
+                p.specifications?.material ? `Material: ${p.specifications.material}` : null,
+                p.specifications?.weight ? `Weight: ${p.specifications.weight}` : null,
+                p.specifications?.sizing ? `Sizing: ${p.specifications.sizing}` : null,
+                p.specifications?.customization ? `Customization: ${p.specifications.customization}` : null
+              ].filter(Boolean),
+              mfgDetails: {
+                moq: `${p.minOrderQuantity || 50} Units`,
+                leadTime: '18-22 Business Days',
+                customization: p.specifications?.customization || 'Custom labels and print'
+              },
+              performanceTech: p.description || '',
+              sizingType: p.specifications?.sizing?.toLowerCase().includes('waist') ? 'bottoms' : 'tops'
+            };
+          });
+
+          if (Object.keys(formattedCategories).length > 0) {
+            setDynamicCategories(formattedCategories);
+          }
+          if (formattedProducts.length > 0) {
+            setDynamicProducts(formattedProducts);
+          }
+        }
+      } catch (err) {
+        console.error('Failed to load dynamic storefront data:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, []);
+
+  const finalCategories = dynamicCategories || CATEGORIES;
+  const finalProducts = dynamicProducts || PRODUCTS;
 
   // Helper to change URL query parameters
   const setParams = (newParams) => {
@@ -101,15 +202,26 @@ export default function ProductsClient() {
   };
 
   const activeCategoryKey = categoryParam || 'active-wear';
-  const categoryData = CATEGORIES[activeCategoryKey];
+  const categoryData = finalCategories[activeCategoryKey];
 
   const activeProduct = productParam
-    ? PRODUCTS.find((p) => p.id === productParam)
+    ? finalProducts.find((p) => p.id === productParam)
     : null;
 
   const subcategoryProducts = subParam
-    ? PRODUCTS.filter((p) => p.category === activeCategoryKey && p.subcategory === subParam)
+    ? finalProducts.filter((p) => p.category === activeCategoryKey && p.subcategory === subParam)
     : [];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-neutral-200 border-t-black animate-spin" />
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-neutral-400 font-mono">Loading Catalog...</span>
+        </div>
+      </div>
+    );
+  }
 
   // Breadcrumbs
   const renderBreadcrumbs = () => {
@@ -145,7 +257,7 @@ export default function ProductsClient() {
     const sizingGuide = SIZING_GUIDES[activeProduct.sizingType || 'tops'];
     
     // Find related products (same subcategory, excluding current)
-    const relatedProducts = PRODUCTS.filter(
+    const relatedProducts = finalProducts.filter(
       (p) => p.subcategory === activeProduct.subcategory && p.id !== activeProduct.id
     ).slice(0, 3);
 
@@ -392,6 +504,13 @@ export default function ProductsClient() {
   // 2. SUBCATEGORY PRODUCTS GRID VIEW (ENHANCED)
   if (subParam) {
     const subcategoryData = categoryData?.subcategories[subParam];
+    
+    // Slice products for pagination
+    const totalPages = Math.ceil(subcategoryProducts.length / itemsPerPage);
+    const indexOfLastProduct = currentPage * itemsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+    const paginatedProducts = subcategoryProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
     return (
       <div className="min-h-screen bg-[#f9fafb] text-black py-12">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-12">
@@ -419,7 +538,7 @@ export default function ProductsClient() {
 
           {/* Grid */}
           <StaggerContainer delay={0.1} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {subcategoryProducts.map((p) => (
+            {paginatedProducts.map((p) => (
               <StaggerItem
                 key={p.id}
                 onClick={() => setParams({ product: p.id })}
@@ -458,6 +577,39 @@ export default function ProductsClient() {
               </StaggerItem>
             ))}
           </StaggerContainer>
+
+          {/* Pagination Navigation */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-12 pt-6 border-t border-neutral-200">
+              <button
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="px-4 py-2 text-[9px] font-extrabold uppercase tracking-widest bg-white hover:bg-neutral-50 border border-neutral-200 hover:border-black rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 cursor-pointer text-black"
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`h-8 w-8 text-[9px] font-extrabold rounded-lg flex items-center justify-center border transition-all duration-300 cursor-pointer ${
+                    currentPage === page
+                      ? 'bg-black border-black text-white'
+                      : 'bg-white border-neutral-200 text-neutral-500 hover:border-neutral-400 hover:text-black'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 text-[9px] font-extrabold uppercase tracking-widest bg-white hover:bg-neutral-50 border border-neutral-200 hover:border-black rounded-lg disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 cursor-pointer text-black"
+              >
+                Next
+              </button>
+            </div>
+          )}
 
           {/* ADDED SECTION: B2B FAQ FOR PROCUREMENT */}
           <div className="border-t border-neutral-200 pt-20 mt-20 text-left">
@@ -527,7 +679,7 @@ export default function ProductsClient() {
 
         {/* Dynamic Category Selector Menu Tab */}
         <div className="flex gap-2 border-b border-neutral-200 pb-6 mb-12">
-          {Object.entries(CATEGORIES).map(([key, data]) => (
+          {Object.entries(finalCategories).map(([key, data]) => (
             <button
               key={key}
               onClick={() => setParams({ category: key, sub: null, product: null })}

@@ -159,7 +159,7 @@ function MiniCalendar({ isDark }) {
               d === null
                 ? ''
                 : isToday(d)
-                ? 'bg-white text-black font-black'
+                ? (isDark ? 'bg-white text-black font-black' : 'bg-black text-white font-black')
                 : `${cellHover} ${text}`
             }`}
           >
@@ -170,7 +170,7 @@ function MiniCalendar({ isDark }) {
 
       {/* Today label */}
       <div className={`mt-3 pt-3 border-t ${isDark ? 'border-neutral-900' : 'border-gray-200'} flex items-center gap-2`}>
-        <span className="h-2 w-2 rounded-full bg-white block" />
+        <span className={`h-2 w-2 rounded-full ${isDark ? 'bg-white' : 'bg-black'} block`} />
         <span className={`text-[9px] font-black uppercase tracking-widest ${muted}`}>
           Today — {MONTHS_SHORT[today.getMonth()]} {today.getDate()}, {today.getFullYear()}
         </span>
@@ -187,6 +187,8 @@ export default function AdminDashboard() {
   const [recentInquiries, setRecentInquiries] = useState([]);
   const [products, setProducts]   = useState([]);
   const [categories, setCategories] = useState([]);
+  const [allQuotations, setAllQuotations] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const [lastFetched, setLastFetched] = useState(null);
   const [refreshKey, setRefreshKey]   = useState(0);
 
@@ -222,6 +224,7 @@ export default function AdminDashboard() {
       const allInquiries  = quotes.quotations || [];
       const allProducts   = prods.products   || [];
       const allCategories = cats.categories  || [];
+      const userList      = users.users      || [];
 
       const pending  = allInquiries.filter(q => q.status === 'pending').length;
       const resolved = allInquiries.filter(q => q.status === 'completed').length;
@@ -230,7 +233,7 @@ export default function AdminDashboard() {
         categoriesCount:   allCategories.length,
         productsCount:     allProducts.length,
         pendingInquiries:  pending,
-        adminsCount:       (users.users || []).length,
+        adminsCount:       userList.length,
         totalInquiries:    allInquiries.length,
         resolvedInquiries: resolved,
       });
@@ -238,6 +241,8 @@ export default function AdminDashboard() {
       setRecentInquiries(allInquiries.slice(0, 6));
       setProducts(allProducts);
       setCategories(allCategories);
+      setAllQuotations(allInquiries);
+      setAllUsers(userList);
       setLastFetched(new Date());
     } catch (err) {
       console.error('Failed to load dashboard data:', err);
@@ -262,30 +267,46 @@ export default function AdminDashboard() {
   const parentCats = categories.filter(c => !c.parentCategory);
   const donutSlices = parentCats.length > 0
     ? parentCats.map((cat, i) => {
-        const catProds = products.filter(p => String(p.category) === String(cat._id)).length;
-        const colors = ['#ffffff', '#a3a3a3', '#525252', '#262626'];
-        return { label: cat.name, value: catProds || 1, color: colors[i % colors.length] };
+        const catProds = products.filter(p => String(p.category?._id || p.category) === String(cat._id)).length;
+        const colors = isDark
+          ? ['#ffffff', '#a3a3a3', '#525252', '#262626']
+          : ['#000000', '#4b5563', '#9ca3af', '#e5e7eb'];
+        return { label: cat.name, value: catProds, color: colors[i % colors.length] };
       })
     : [
-        { label: 'Active Wear', value: Math.round(stats.productsCount * 0.6) || 1, color: '#ffffff' },
-        { label: 'Team Wear',   value: Math.round(stats.productsCount * 0.4) || 1, color: '#a3a3a3' },
+        { label: 'Active Wear', value: Math.round(stats.productsCount * 0.6) || 1, color: isDark ? '#ffffff' : '#000000' },
+        { label: 'Team Wear',   value: Math.round(stats.productsCount * 0.4) || 1, color: isDark ? '#a3a3a3' : '#6b7280' },
       ];
 
   // Inquiry status breakdown for bar chart
   const statusBreakdown = [
-    { label: 'Pending',   value: stats.pendingInquiries,                                                          color: '#ffffff' },
-    { label: 'Reviewed',  value: (recentInquiries.filter(q => q.status === 'reviewed').length)  || 0,            color: '#d4d4d4' },
-    { label: 'Responded', value: (recentInquiries.filter(q => q.status === 'responded').length) || 0,            color: '#737373' },
-    { label: 'Completed', value: stats.resolvedInquiries,                                                          color: '#404040' },
+    { label: 'Pending',   value: stats.pendingInquiries,                                                          color: isDark ? '#ffffff' : '#000000' },
+    { label: 'Reviewed',  value: (recentInquiries.filter(q => q.status === 'reviewed').length)  || 0,            color: isDark ? '#d4d4d4' : '#4b5563' },
+    { label: 'Responded', value: (recentInquiries.filter(q => q.status === 'responded').length) || 0,            color: isDark ? '#737373' : '#9ca3af' },
+    { label: 'Completed', value: stats.resolvedInquiries,                                                          color: isDark ? '#404040' : '#e5e7eb' },
   ];
   const maxBarVal = Math.max(...statusBreakdown.map(s => s.value), 1);
 
-  // Sparkline data for stat cards
+  // Sparkline dynamic trends based on creation date timestamps
+  const getTrendData = (items) => {
+    if (!items || items.length === 0) return [0, 0, 0, 0, 0, 0, 0];
+    const now = new Date();
+    const trend = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(now.getDate() - i);
+      d.setHours(23, 59, 59, 999);
+      const count = items.filter(item => item.createdAt && new Date(item.createdAt) <= d).length;
+      trend.push(count);
+    }
+    return trend;
+  };
+
   const sparkData = {
-    categories: [2, 3, 4, 5, 6, 7, stats.categoriesCount || 7],
-    products:   [1, 2, 2, 3, 4, stats.productsCount || 4],
-    inquiries:  [0, 1, 0, 1, 2, stats.pendingInquiries || 2],
-    admins:     [1, 1, 1, 1, 1, stats.adminsCount || 1],
+    categories: getTrendData(categories),
+    products:   getTrendData(products),
+    inquiries:  getTrendData(allQuotations),
+    admins:     getTrendData(allUsers),
   };
 
   /* ── Theme tokens ── */
@@ -548,9 +569,11 @@ export default function AdminDashboard() {
         ) : (
           <div className="space-y-4">
             {parentCats.length > 0 ? parentCats.map((cat, i) => {
-              const count = products.filter(p => String(p.category) === String(cat._id)).length;
+              const count = products.filter(p => String(p.category?._id || p.category) === String(cat._id)).length;
               const pct   = stats.productsCount > 0 ? Math.round((count / stats.productsCount) * 100) : 0;
-              const colors = ['bg-white', 'bg-neutral-400', 'bg-neutral-600', 'bg-neutral-800'];
+              const colors = isDark
+                ? ['bg-white', 'bg-neutral-450', 'bg-neutral-600', 'bg-neutral-800']
+                : ['bg-black', 'bg-neutral-600', 'bg-neutral-450', 'bg-neutral-300'];
               return (
                 <div key={cat._id} className="space-y-1.5">
                   <div className="flex justify-between">

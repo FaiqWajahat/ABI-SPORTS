@@ -163,7 +163,7 @@ export default function AdminLayout({ children }) {
           border-color: #000000 !important;
         }
         .admin-theme-light input::placeholder, .admin-theme-light textarea::placeholder {
-          color: #a3a3a3 !important;
+          color: #8e8e8e !important;
         }
         .admin-theme-light .bg-black {
           background-color: #fafafa !important;
@@ -175,18 +175,22 @@ export default function AdminLayout({ children }) {
         .admin-theme-light .bg-neutral-900 {
           background-color: #f3f4f6 !important;
         }
-        .admin-theme-light .bg-neutral-900\\/40 {
+        
+        /* Map opacity backgrounds */
+        .admin-theme-light .bg-black\\/30,
+        .admin-theme-light .bg-black\\/20,
+        .admin-theme-light .bg-black\\/40 {
+          background-color: #fafafa !important;
+        }
+        .admin-theme-light .bg-neutral-900\\/60,
+        .admin-theme-light .bg-neutral-900\\/50,
+        .admin-theme-light .bg-neutral-900\\/40,
+        .admin-theme-light .bg-neutral-900\\/35,
+        .admin-theme-light .bg-neutral-900\\/20,
+        .admin-theme-light .bg-neutral-900\\/10 {
           background-color: #f3f4f6 !important;
         }
-        .admin-theme-light .bg-neutral-900\\/35 {
-          background-color: #f3f4f6 !important;
-        }
-        .admin-theme-light .bg-neutral-900\\/20 {
-          background-color: #f3f4f6 !important;
-        }
-        .admin-theme-light .bg-neutral-900\\/50 {
-          background-color: #f3f4f6 !important;
-        }
+        
         .admin-theme-light .bg-neutral-955\\/50 {
           background-color: #ffffff !important;
         }
@@ -221,56 +225,54 @@ export default function AdminLayout({ children }) {
         .admin-theme-light .h-px.bg-neutral-200\\/60 {
           background-color: #e5e7eb !important;
         }
+        
+        /* Typography overrides with contrast */
         .admin-theme-light .text-white {
           color: #000000 !important;
         }
         .admin-theme-light .text-neutral-305, .admin-theme-light .text-neutral-300 {
-          color: #374151 !important;
+          color: #1f2937 !important;
         }
         .admin-theme-light .text-neutral-400 {
-          color: #4b5563 !important;
+          color: #374151 !important;
         }
         .admin-theme-light .text-neutral-550 {
-          color: #6b7280 !important;
+          color: #4b5563 !important;
         }
         .admin-theme-light .text-neutral-500 {
-          color: #6b7280 !important;
+          color: #4b5563 !important;
         }
         .admin-theme-light .text-neutral-650 {
-          color: #9ca3af !important;
+          color: #6b7280 !important;
         }
         .admin-theme-light .text-neutral-600 {
-          color: #9ca3af !important;
+          color: #4b5563 !important;
         }
         .admin-theme-light .text-neutral-450 {
-          color: #4b5563 !important;
+          color: #374151 !important;
         }
         .admin-theme-light .text-neutral-455 {
-          color: #4b5563 !important;
+          color: #374151 !important;
         }
+        
+        /* Table rows & hovers */
         .admin-theme-light tr.hover\\:bg-neutral-900\\/20:hover {
-          background-color: #f9fafb !important;
+          background-color: #f3f4f6 !important;
         }
         .admin-theme-light tr.hover\\:bg-neutral-900\\/25:hover {
-          background-color: #f9fafb !important;
+          background-color: #f3f4f6 !important;
         }
         .admin-theme-light td {
           color: #000000 !important;
         }
         .admin-theme-light th {
-          color: #6b7280 !important;
+          color: #4b5563 !important;
         }
-        .admin-theme-light .text-neutral-400.hover\\:bg-neutral-900\\/60:hover {
-          background-color: #f3f4f6 !important;
-          color: #000000 !important;
-        }
-        .admin-theme-light .text-neutral-400.hover\\:bg-neutral-900:hover {
-          background-color: #f3f4f6 !important;
-          color: #000000 !important;
-        }
+        
+        /* Interactive component overrides */
         .admin-theme-light select, .admin-theme-light input, .admin-theme-light textarea {
           background-color: #ffffff !important;
-          border-color: #e5e7eb !important;
+          border-color: #d1d5db !important;
           color: #000000 !important;
         }
         .admin-theme-light select option {
@@ -279,9 +281,48 @@ export default function AdminLayout({ children }) {
         }
         .admin-theme-light .bg-neutral-900.border-neutral-800 {
           background-color: #ffffff !important;
-          border-color: #e5e7eb !important;
+          border-color: #d1d5db !important;
           color: #000000 !important;
         }
+        
+        /* Action buttons flip to Black in Light Mode */
+        .admin-theme-light button.bg-white {
+          background-color: #000000 !important;
+          color: #ffffff !important;
+          border-color: #000000 !important;
+        }
+        .admin-theme-light button.bg-white:hover {
+          background-color: #1f2937 !important;
+          color: #ffffff !important;
+        }
+        
+        /* Inputs & Checkbox theme */
+        .admin-theme-light input[type="checkbox"] {
+          accent-color: #000000 !important;
+        }
+        
+        /* Strict hover colors to prevent invisible/white text in Light Mode */
+        .admin-theme-light .hover\\:text-white:hover {
+          color: #000000 !important;
+        }
+        .admin-theme-light .hover\\:bg-neutral-900\\/40:hover {
+          background-color: #f3f4f6 !important;
+        }
+        .admin-theme-light .hover\\:bg-neutral-900:hover {
+          background-color: #f3f4f6 !important;
+        }
+        .admin-theme-light .hover\\:bg-neutral-800:hover {
+          background-color: #e5e7eb !important;
+        }
+        .admin-theme-light .group:hover .group-hover\\:text-white {
+          color: #000000 !important;
+        }
+        .admin-theme-light .group:hover .group-hover\\:text-neutral-305,
+        .admin-theme-light .group:hover .group-hover\\:text-neutral-300 {
+          color: #000000 !important;
+        }
+        
+        /* SVG Graph nodes / lines */
         .admin-theme-light svg line {
           stroke: #e5e7eb !important;
         }
@@ -296,13 +337,14 @@ export default function AdminLayout({ children }) {
         .admin-theme-light svg path[stroke="#ffffff"] {
           stroke: #000000 !important;
         }
-        .admin-theme-light svg circle {
+        .admin-theme-light svg .recharts-dot,
+        .admin-theme-light svg .recharts-active-dot {
           fill: #000000 !important;
           stroke: #ffffff !important;
         }
         .admin-theme-light .admin-tooltip {
           background-color: #ffffff !important;
-          border-color: #e5e7eb !important;
+          border-color: #d1d5db !important;
           color: #000000 !important;
         }
         .admin-theme-light .bg-neutral-850 {
@@ -313,6 +355,8 @@ export default function AdminLayout({ children }) {
         .admin-theme-light .ring-neutral-950 {
           --tw-ring-color: #ffffff !important;
         }
+        
+        /* Alert box overrides */
         .admin-theme-light .bg-red-950\\/5 {
           background-color: #fef2f2 !important;
           border-color: #fca5a5 !important;
@@ -324,7 +368,7 @@ export default function AdminLayout({ children }) {
           background-color: #000000 !important;
         }
 
-        /* Light mode tag/badge strict overrides */
+        /* Status colors & tags */
         .admin-theme-light .bg-yellow-950\\/20.text-yellow-500 {
           background-color: #f3f4f6 !important;
           color: #1f2937 !important;
@@ -346,8 +390,41 @@ export default function AdminLayout({ children }) {
           border-color: #fca5a5 !important;
         }
         
-        /* Modal dynamic backdrop styling */
-        .admin-theme-light .fixed.inset-0.bg-black\\/75 {
+        /* RFQ detail action buttons color overrides */
+        .admin-theme-light .text-yellow-500.border-yellow-900\\/30.bg-yellow-950\\/10 {
+          color: #4b5563 !important;
+          border-color: #d1d5db !important;
+          background-color: #ffffff !important;
+        }
+        .admin-theme-light .text-yellow-500.border-yellow-900\\/30.bg-yellow-950\\/10:hover {
+          background-color: #f3f4f6 !important;
+          color: #000000 !important;
+        }
+
+        .admin-theme-light .text-blue-500.border-blue-900\\/30.bg-blue-950\\/10 {
+          color: #1f2937 !important;
+          border-color: #9ca3af !important;
+          background-color: #e5e7eb !important;
+        }
+        .admin-theme-light .text-blue-500.border-blue-900\\/30.bg-blue-950\\/10:hover {
+          background-color: #d1d5db !important;
+          color: #000000 !important;
+        }
+
+        .admin-theme-light .text-green-500.border-green-900\\/30.bg-green-950\\/10 {
+          color: #ffffff !important;
+          border-color: #000000 !important;
+          background-color: #000000 !important;
+        }
+        .admin-theme-light .text-green-500.border-green-900\\/30.bg-green-950\\/10:hover {
+          background-color: #1f2937 !important;
+          color: #ffffff !important;
+        }
+        
+        /* Modal and Slide-In Backdrops */
+        .admin-theme-light .bg-black\\/70,
+        .admin-theme-light .bg-black\\/75,
+        .admin-theme-light .bg-black\\/60 {
           background-color: rgba(0, 0, 0, 0.4) !important;
           backdrop-filter: blur(4px) !important;
         }

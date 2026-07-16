@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Category from '@/models/Category';
+import Product from '@/models/Product';
 
 // Session authentication check helper
 function checkAuth(req) {
@@ -111,6 +112,15 @@ export async function DELETE(req) {
     if (hasChildren) {
       return NextResponse.json(
         { error: 'Cannot delete category that has subcategories' },
+        { status: 400 }
+      );
+    }
+
+    // Check if there are products using this category
+    const hasProducts = await Product.findOne({ category: id });
+    if (hasProducts) {
+      return NextResponse.json(
+        { error: 'Cannot delete category associated with active products' },
         { status: 400 }
       );
     }

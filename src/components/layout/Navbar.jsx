@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -123,9 +124,11 @@ const Navbar = () => {
               className="flex-shrink-0"
             >
               <Link href="/" className="flex items-center">
-                <span className="text-2xl sm:text-3xl font-black tracking-tighter text-white font-sans uppercase">
+                {/* <span className="text-2xl sm:text-3xl font-black tracking-tighter text-white font-sans uppercase">
                   ABI<span className="text-white opacity-90">SPORTS</span>
-                </span>
+                </span> */}
+
+                <Image src='/logo.png' alt='ABI SPORTS Logo' width={50} height={30} className="object-contain" />
               </Link>
             </motion.div>
 

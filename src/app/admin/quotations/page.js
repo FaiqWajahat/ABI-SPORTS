@@ -24,6 +24,8 @@ export default function AdminQuotations() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8;
 
   // Detail Modal states
   const [modalOpen, setModalOpen] = useState(false);
@@ -48,6 +50,10 @@ export default function AdminQuotations() {
   useEffect(() => {
     fetchQuotations();
   }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, statusFilter]);
 
   // Update Quotation Status
   const handleUpdateStatus = async (id, newStatus) => {
@@ -75,10 +81,18 @@ export default function AdminQuotations() {
     }
   };
 
-  // Delete RFQ Inquiry
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to permanently delete this quotation request?')) return;
+  // Delete Confirmation triggers
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+  const [deleteTargetName, setDeleteTargetName] = useState('');
 
+  const handleDelete = (id, name) => {
+    setDeleteTargetId(id);
+    setDeleteTargetName(name);
+    setDeleteConfirmOpen(true);
+  };
+
+  const executeDelete = async (id) => {
     try {
       const res = await fetch(`/api/admin/quotations?id=${id}`, {
         method: 'DELETE',
@@ -90,7 +104,6 @@ export default function AdminQuotations() {
         throw new Error(data.error || 'Failed to delete quotation');
       }
 
-      alert('Quotation deleted successfully');
       setModalOpen(false);
       fetchQuotations();
     } catch (err) {
@@ -177,7 +190,7 @@ export default function AdminQuotations() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-neutral-900/40">
-                {filteredQuotations.map((quote) => (
+                {filteredQuotations.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((quote) => (
                   <tr key={quote._id} className="group hover:bg-neutral-900/20 transition-colors">
                     <td className="py-4 pl-6 font-bold text-white uppercase tracking-tight">{quote.companyName}</td>
                     <td className="py-4 px-6">
@@ -218,6 +231,39 @@ export default function AdminQuotations() {
           </div>
         )}
       </div>
+
+      {/* Pagination Controls */}
+      {!loading && filteredQuotations.length > itemsPerPage && (
+        <div className="flex items-center justify-end gap-2 bg-neutral-950 border border-neutral-900 rounded-xl p-4 mt-4 select-none">
+          <button
+            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="px-3.5 py-2 text-[9px] font-black uppercase tracking-widest bg-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed border border-neutral-800 hover:border-neutral-600 hover:text-white rounded-lg transition-colors cursor-pointer text-neutral-400"
+          >
+            Previous
+          </button>
+          {Array.from({ length: Math.ceil(filteredQuotations.length / itemsPerPage) }, (_, i) => i + 1).map(page => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`h-8 w-8 text-[9px] font-black rounded-lg flex items-center justify-center border transition-all cursor-pointer ${
+                currentPage === page
+                  ? 'bg-white border-white text-black font-extrabold'
+                  : 'bg-neutral-900 border-neutral-850 text-neutral-400 hover:border-neutral-600 hover:text-white'
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            onClick={() => setCurrentPage(p => Math.min(Math.ceil(filteredQuotations.length / itemsPerPage), p + 1))}
+            disabled={currentPage === Math.ceil(filteredQuotations.length / itemsPerPage)}
+            className="px-3.5 py-2 text-[9px] font-black uppercase tracking-widest bg-neutral-900 disabled:opacity-40 disabled:cursor-not-allowed border border-neutral-800 hover:border-neutral-600 hover:text-white rounded-lg transition-colors cursor-pointer text-neutral-400"
+          >
+            Next
+          </button>
+        </div>
+      )}
 
       {/* RFQ Detail Modal View */}
       <AnimatePresence>
@@ -411,7 +457,7 @@ export default function AdminQuotations() {
               {/* Delete trigger */}
               <div className="pt-4 border-t border-neutral-900/70 flex justify-end">
                 <button
-                  onClick={() => handleDelete(selectedQuotation._id)}
+                  onClick={() => handleDelete(selectedQuotation._id, selectedQuotation.companyName)}
                   className="flex items-center gap-2 bg-red-950/20 hover:bg-red-950/40 border border-red-900/30 hover:border-red-900 text-red-500 font-extrabold text-[10px] uppercase tracking-widest px-4 py-2.5 rounded transition-all cursor-pointer"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -424,6 +470,55 @@ export default function AdminQuotations() {
         )}
       </AnimatePresence>
 
+      {/* Reusable Delete Confirmation Dialog Modal */}
+      <AnimatePresence>
+        {deleteConfirmOpen && (
+          <div className="fixed inset-0 w-screen h-screen z-[100] flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              key="delete-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setDeleteConfirmOpen(false)}
+              className="absolute inset-0 w-screen h-screen bg-black/75 backdrop-blur-xs"
+            />
+            {/* Modal Body */}
+            <motion.div
+              key="delete-body"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              className="relative w-full max-w-sm bg-neutral-950 border border-neutral-900 rounded-xl p-6 shadow-2xl z-10 text-center"
+            >
+              <div className="h-12 w-12 bg-red-950/20 border border-red-900/30 rounded-full flex items-center justify-center text-red-500 mx-auto mb-4">
+                <Trash2 className="h-5 w-5" />
+              </div>
+              <h3 className="text-sm font-black uppercase tracking-wider text-white mb-2">Confirm Destruction</h3>
+              <p className="text-xs text-neutral-400 mb-6 leading-relaxed">
+                Are you sure you want to permanently delete quotation request from <span className="text-white font-bold">{deleteTargetName || "this company"}</span>? This process cannot be undone.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDeleteConfirmOpen(false)}
+                  className="flex-1 bg-neutral-900 hover:bg-neutral-850 border border-neutral-800 text-neutral-400 hover:text-white font-bold text-[9px] uppercase tracking-widest py-3 rounded-lg cursor-pointer transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={async () => {
+                    setDeleteConfirmOpen(false);
+                    await executeDelete(deleteTargetId);
+                  }}
+                  className="flex-1 bg-white hover:bg-neutral-200 text-black font-extrabold text-[9px] uppercase tracking-widest py-3 rounded-lg cursor-pointer transition-all"
+                >
+                  Confirm Delete
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
