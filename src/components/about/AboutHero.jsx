@@ -29,24 +29,24 @@ export default function AboutHero() {
 
             <AnimatedSection direction="up" delay={0.1}>
               <h1 className="text-5xl sm:text-7xl lg:text-[4rem] font-black tracking-tighter text-black uppercase leading-[1.02] font-sans">
-                VERTICALLY<br />
-                INTEGRATED.<br />
-                SINCE 1984.
+                AL BADAR IMPEX.<br />
+                PREMIUM APPAREL.<br />
+                SINCE 2011.
               </h1>
             </AnimatedSection>
 
             <AnimatedSection direction="up" delay={0.2}>
               <p className="text-sm sm:text-[15px] text-neutral-600 font-light leading-relaxed max-w-lg">
-                A fully integrated sportswear manufacturer based in Sialkot, Pakistan — controlling fabric milling, precision cutting, sublimation, stitching, and global logistics under one roof.
+                Al Badar Impex is a leading custom apparel manufacturer specializing in premium-quality Activewear, Swimwear, Teamwear, and Streetwear. We provide end-to-end manufacturing solutions, from design and fabric sourcing to printing, embroidery, and worldwide delivery.
               </p>
             </AnimatedSection>
 
             {/* 3 pillars */}
             <StaggerContainer delay={0.25} className="flex flex-wrap gap-x-8 gap-y-4 pt-6 border-t border-neutral-200">
               {[
-                "42+ Years of Manufacturing",
-                "WRAP Platinum Certified",
-                "40+ Export Markets"
+                "15+ Years of Sourcing",
+                "OEM & Private Label Support",
+                "Global Sourcing Markets"
               ].map((item, i) => (
                 <StaggerItem key={i} className="flex items-center space-x-2">
                   <span className="flex-shrink-0 flex items-center justify-center h-4.5 w-4.5 rounded-full border border-black/35">
@@ -66,7 +66,7 @@ export default function AboutHero() {
               {/* 1. Tall left card */}
               <StaggerItem className="col-span-7 relative h-full rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm hover:-translate-y-1.5 hover:shadow-md transition-all duration-500 min-h-[320px]">
                 <Image
-                  src="/active-wear.png"
+                  src="/about-hero-01.png"
                   alt="ABI Sports Sialkot Factory Floor"
                   fill
                   sizes="(max-width: 768px) 100vw, 25vw"
@@ -76,7 +76,7 @@ export default function AboutHero() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
 
                 <div className="absolute top-4 left-4 bg-white text-black text-[9px] font-extrabold tracking-wider uppercase px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
-                  Est. 1984
+                  Est. 2011
                 </div>
 
                 <div className="absolute bottom-6 left-6">
@@ -90,7 +90,7 @@ export default function AboutHero() {
 
                 <StaggerItem className="relative flex-1 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[148px] hover:-translate-y-1 hover:shadow-md transition-all duration-500">
                   <Image
-                    src="/team-wear.png"
+                    src="/about-hero-02.png"
                     alt="Sublimation printing press"
                     fill
                     sizes="15vw"
@@ -104,7 +104,7 @@ export default function AboutHero() {
 
                 <StaggerItem className="relative flex-1 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[148px] hover:-translate-y-1 hover:shadow-md transition-all duration-500">
                   <Image
-                    src="/active-wear.png"
+                    src="/about-hero-03.png"
                     alt="Flatlock sewing machines"
                     fill
                     sizes="15vw"

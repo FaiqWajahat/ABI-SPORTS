@@ -14,9 +14,9 @@ import FAQ from '@/components/home/FAQ';
 import QualityControl from '@/components/about/QualityControl';
 
 export const metadata = {
-  title: 'Production | ABI SPORTS — Sportswear Manufacturers',
+  title: 'Production | Al Badar Impex — Custom Sportswear Manufacturers',
   description:
-    'Explore ABI Sports Sialkot\'s vertically integrated production capabilities — from CAD cutting, flatlock stitching, and dye sublimation to certified packaging and global export logistics.',
+    "Explore Al Badar Impex's vertically integrated production capabilities — from CAD cutting, flatlock stitching, and dye sublimation to packaging and global logistics.",
 };
 
 export default function ProductionPage() {

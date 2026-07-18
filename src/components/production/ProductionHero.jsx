@@ -63,7 +63,7 @@ export default function ProductionHero() {
             <StaggerContainer delay={0.15} className="grid grid-cols-12 gap-4 items-stretch">
 
               <StaggerItem data-cursor="expand" className="col-span-7 relative h-full rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm hover:-translate-y-1.5 hover:shadow-md transition-all duration-500 min-h-[320px]">
-                <Image src="/active-wear.png" alt="CAD precision fabric cutting" fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover object-center group-hover:scale-104 transition-transform duration-700" priority />
+                <Image src="/production-hero-03.png" alt="CAD precision fabric cutting" fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover object-center group-hover:scale-104 transition-transform duration-700" priority />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
                 <div className="absolute top-4 left-4 bg-white text-black text-[9px] font-extrabold tracking-wider uppercase px-3 py-1.5 rounded-full shadow-sm">
                   Production Floor
@@ -76,7 +76,7 @@ export default function ProductionHero() {
 
               <div className="col-span-5 flex flex-col gap-4 h-full">
                 <StaggerItem data-cursor="expand" className="relative flex-1 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[148px] hover:-translate-y-1 hover:shadow-md transition-all duration-500">
-                  <Image src="/team-wear.png" alt="Flatlock stitching machine" fill sizes="15vw" className="object-cover object-center group-hover:scale-104 transition-transform duration-700" />
+                  <Image src="/production-hero-01.png" alt="Flatlock stitching machine" fill sizes="15vw" className="object-cover object-center group-hover:scale-104 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-4">
                     <p className="text-[10px] font-black text-white uppercase tracking-wider">Flatlock Stitching</p>
@@ -84,7 +84,7 @@ export default function ProductionHero() {
                 </StaggerItem>
 
                 <StaggerItem data-cursor="expand" className="relative flex-1 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[148px] hover:-translate-y-1 hover:shadow-md transition-all duration-500">
-                  <Image src="/active-wear.png" alt="Sublimation heat press" fill sizes="15vw" className="object-cover object-center group-hover:scale-104 transition-transform duration-700" />
+                  <Image src="/production-hero-02.png" alt="Sublimation heat press" fill sizes="15vw" className="object-cover object-center group-hover:scale-104 transition-transform duration-700" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   <div className="absolute bottom-3 left-4">
                     <p className="text-[10px] font-black text-white uppercase tracking-wider">Sublimation Press</p>

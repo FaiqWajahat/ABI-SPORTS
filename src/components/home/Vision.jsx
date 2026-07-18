@@ -14,8 +14,8 @@ const VISION_TABS = [
     tagline: "Zero-Impact Manufacturing",
     title: "Eco-Friendly Operations",
     description: "We prioritize organic fabric blends and water-saving dye processes. By utilizing GOTS-certified organic cotton, recycled polyester, and water-based non-toxic inks, we keep B2B sportswear clean, compliant, and sustainable.",
-    mainImage: "/active-wear.png",
-    insetImage: "/team-wear.png"
+    mainImage: "/eco-friendly-values.png",
+    insetImage: "/step-05.png"
   },
   {
     id: 'tech',
@@ -24,8 +24,8 @@ const VISION_TABS = [
     tagline: "Advanced CAD & CLO3D Layouts",
     title: "Technological Precision",
     description: "Our digital design desk builds 3D mockups to check fit and drape before cutting a single yard of fabric. Connected to automatic laser cutters, this eliminates dimension errors and reduces textile waste by 18%.",
-    mainImage: "/team-wear.png",
-    insetImage: "/active-wear.png"
+    mainImage: "/technological-precision-values.png",
+    insetImage: "/process-03.png"
   },
   {
     id: 'brands',
@@ -34,8 +34,8 @@ const VISION_TABS = [
     tagline: "Flexible B2B Custom Solutions",
     title: "Empowering Global Brands",
     description: "We bridge the gap between startup private labels and large scale factories. By offering 50-unit flexible MOQs, fast 10-day sampling turnaround, and compliant FBA global logistics, we build long-term B2B partnerships.",
-    mainImage: "/active-wear.png",
-    insetImage: "/team-wear.png"
+    mainImage: "/global-brands-values.png",
+    insetImage: "/step-06.png"
   }
 ];
 

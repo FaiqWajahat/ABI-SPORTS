@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { Shield, Eye, Lock, FileText, ArrowLeft, CheckCircle2 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Privacy Policy | ABI SPORTS — B2B Sportswear Manufacturers',
+  title: 'Privacy Policy | Al Badar Impex — B2B Sportswear Manufacturers',
   description:
-    'Read the ABI Sports privacy policy. Learn how we handle corporate contact information, design briefs, vector logos, CAD templates, and intellectual property protection.',
+    'Read the Al Badar Impex privacy policy. Learn how we handle corporate contact information, design briefs, vector logos, CAD templates, and intellectual property protection.',
 };
 
 export default function PrivacyPage() {
@@ -64,7 +64,7 @@ export default function PrivacyPage() {
           </h1>
           <div className="h-0.5 w-12 bg-black mt-4 mb-4" />
           <p className="text-neutral-500 text-sm font-light leading-relaxed max-w-2xl">
-            ABI Sports is committed to protecting your personal information and corporate intellectual property. This policy explains our data management, design protection rules, and manufacturing confidentiality guidelines.
+            Al Badar Impex is committed to protecting your personal information and corporate intellectual property. This policy explains our data management, design protection rules, and manufacturing confidentiality guidelines.
           </p>
         </div>
 
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
               compliance@abisportswear.com
             </a>
             <span className="hidden sm:inline text-neutral-300">|</span>
-            <span className="text-neutral-500 font-medium">ABI Sports Corp — Compliance Division</span>
+            <span className="text-neutral-500 font-medium">Al Badar Impex — Compliance Division</span>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ export default function FactoryNumbers() {
       {/* Background huge watermark text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
         <span className="text-[16vw] font-black text-neutral-50 uppercase tracking-tighter leading-none whitespace-nowrap">
-          ABI SPORTS
+          AL BADAR IMPEX
         </span>
       </div>
 

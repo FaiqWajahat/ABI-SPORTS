@@ -113,7 +113,7 @@ export default function Offices() {
           </AnimatedSection>
           <AnimatedSection direction="up" delay={0.15}>
             <p className="text-xs sm:text-[13px] text-neutral-600 font-light mt-4 leading-relaxed">
-              From our flagship Sialkot factory to our Toronto and New York offices — explore the spaces where ABI Sports designs, manufactures, and ships.
+              From our flagship Sialkot factory to our Toronto and New York offices — explore the spaces where Al Badar Impex designs, manufactures, and ships.
             </p>
           </AnimatedSection>
         </div>

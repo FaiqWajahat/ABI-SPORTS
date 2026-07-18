@@ -6,7 +6,7 @@ import {
   ArrowRight, ArrowLeft, Check, CheckCircle2,
   Package, Shirt, Scissors, ShieldCheck,
   Clock, Zap, Globe, User, Settings,
-  Tag, FileText, Send, ChevronDown
+  Tag, FileText, Send, ChevronDown, Mail, Phone, MapPin
 } from 'lucide-react';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -63,7 +63,7 @@ const TRUST = [
 function FieldLabel({ children, required, hint }) {
   return (
     <div className="flex items-center justify-between mb-2">
-      <label className="text-[10px] font-extrabold uppercase tracking-widest text-neutral-500">
+      <label className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-neutral-600">
         {children}
         {required && <span className="text-black ml-0.5">*</span>}
       </label>
@@ -72,44 +72,52 @@ function FieldLabel({ children, required, hint }) {
   );
 }
 
-function TextInput({ label, required, hint, id, type = 'text', placeholder, value, onChange }) {
+function TextInput({ label, required, hint, id, type = 'text', placeholder, value, onChange, error }) {
   const [focused, setFocused] = useState(false);
   return (
     <div>
       <FieldLabel required={required} hint={hint}>{label}</FieldLabel>
-      <div className={`relative rounded-xl border transition-all duration-200 ${focused ? 'border-black ring-2 ring-black/8' : 'border-neutral-200 hover:border-neutral-300'}`}>
+      <div className={`relative rounded-xl border transition-all duration-200 ${
+        error ? 'border-red-500 ring-2 ring-red-500/10' : focused ? 'border-black ring-2 ring-black/8' : 'border-neutral-200 hover:border-neutral-300'
+      }`}>
         <input
           id={id} type={type} value={value} onChange={onChange} placeholder={placeholder}
           onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
           className="w-full bg-white px-4 py-3.5 text-sm text-black placeholder-neutral-300 rounded-xl outline-none"
         />
       </div>
+      {error && <p className="text-[10px] text-red-500 font-semibold mt-1.5">{error}</p>}
     </div>
   );
 }
 
-function TextareaInput({ label, required, hint, id, placeholder, rows = 4, value, onChange }) {
+function TextareaInput({ label, required, hint, id, placeholder, rows = 4, value, onChange, error }) {
   const [focused, setFocused] = useState(false);
   return (
     <div>
       <FieldLabel required={required} hint={hint}>{label}</FieldLabel>
-      <div className={`relative rounded-xl border transition-all duration-200 ${focused ? 'border-black ring-2 ring-black/8' : 'border-neutral-200 hover:border-neutral-300'}`}>
+      <div className={`relative rounded-xl border transition-all duration-200 ${
+        error ? 'border-red-500 ring-2 ring-red-500/10' : focused ? 'border-black ring-2 ring-black/8' : 'border-neutral-200 hover:border-neutral-300'
+      }`}>
         <textarea
           id={id} rows={rows} value={value} onChange={onChange} placeholder={placeholder}
           onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
           className="w-full bg-white px-4 py-3.5 text-sm text-black placeholder-neutral-300 rounded-xl outline-none resize-none"
         />
       </div>
+      {error && <p className="text-[10px] text-red-500 font-semibold mt-1.5">{error}</p>}
     </div>
   );
 }
 
-function SelectInput({ label, required, hint, id, value, onChange, children }) {
+function SelectInput({ label, required, hint, id, value, onChange, children, error }) {
   const [focused, setFocused] = useState(false);
   return (
     <div>
       <FieldLabel required={required} hint={hint}>{label}</FieldLabel>
-      <div className={`relative rounded-xl border transition-all duration-200 ${focused ? 'border-black ring-2 ring-black/8' : 'border-neutral-200 hover:border-neutral-300'}`}>
+      <div className={`relative rounded-xl border transition-all duration-200 ${
+        error ? 'border-red-500 ring-2 ring-red-500/10' : focused ? 'border-black ring-2 ring-black/8' : 'border-neutral-200 hover:border-neutral-300'
+      }`}>
         <select
           id={id} value={value} onChange={onChange}
           onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
@@ -119,6 +127,7 @@ function SelectInput({ label, required, hint, id, value, onChange, children }) {
         </select>
         <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400 pointer-events-none" />
       </div>
+      {error && <p className="text-[10px] text-red-500 font-semibold mt-1.5">{error}</p>}
     </div>
   );
 }
@@ -129,7 +138,7 @@ function Chip({ selected, onClick, children }) {
   return (
     <button type="button" onClick={onClick}
       className={`px-3.5 py-2.5 rounded-xl border text-[9px] font-extrabold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
-        selected ? 'bg-black border-black text-white shadow-sm' : 'bg-white border-neutral-200 text-neutral-500 hover:border-neutral-400 hover:text-neutral-800'
+        selected ? 'bg-black border-black text-white shadow-sm' : 'bg-white border-neutral-200 text-neutral-500 hover:border-neutral-450 hover:text-neutral-800'
       }`}
     >
       {selected && <Check className="h-2.5 w-2.5 flex-shrink-0" />}
@@ -143,7 +152,7 @@ function ProductCard({ item, selected, onClick }) {
   return (
     <button type="button" onClick={onClick}
       className={`flex items-start gap-3 p-4 rounded-xl border text-left transition-all duration-200 cursor-pointer w-full ${
-        selected ? 'bg-black border-black shadow-md' : 'bg-white border-neutral-200 hover:border-neutral-300 hover:shadow-sm'
+        selected ? 'bg-black border-black shadow-md' : 'bg-white border-neutral-200 hover:border-neutral-350 hover:shadow-xs'
       }`}
     >
       <div className={`h-9 w-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-200 ${
@@ -164,7 +173,7 @@ function FabricCard({ item, selected, onClick }) {
   return (
     <button type="button" onClick={onClick}
       className={`flex items-center justify-between p-3.5 rounded-xl border text-left transition-all duration-200 cursor-pointer w-full group ${
-        selected ? 'bg-black border-black' : 'bg-white border-neutral-200 hover:border-neutral-300'
+        selected ? 'bg-black border-black' : 'bg-white border-neutral-200 hover:border-neutral-350'
       }`}
     >
       <div>
@@ -184,7 +193,7 @@ function PrintCard({ item, selected, onClick }) {
   return (
     <button type="button" onClick={onClick}
       className={`flex items-center justify-between px-5 py-4 rounded-xl border text-left transition-all duration-200 cursor-pointer w-full group ${
-        selected ? 'bg-black border-black shadow-sm' : 'bg-white border-neutral-200 hover:border-neutral-300'
+        selected ? 'bg-black border-black shadow-sm' : 'bg-white border-neutral-200 hover:border-neutral-350'
       }`}
     >
       <div>
@@ -203,8 +212,8 @@ function PrintCard({ item, selected, onClick }) {
 function MoqCard({ label, selected, onClick }) {
   return (
     <button type="button" onClick={onClick}
-      className={`py-3 px-4 rounded-xl border text-center transition-all duration-200 cursor-pointer w-full ${
-        selected ? 'bg-black border-black shadow-sm' : 'bg-white border-neutral-200 hover:border-neutral-300'
+      className={`py-3.5 px-4 rounded-xl border text-center transition-all duration-200 cursor-pointer w-full ${
+        selected ? 'bg-black border-black shadow-sm' : 'bg-white border-neutral-200 hover:border-neutral-350'
       }`}
     >
       <p className={`text-sm font-black tracking-tight ${selected ? 'text-white' : 'text-black'}`}>{label}</p>
@@ -215,21 +224,21 @@ function MoqCard({ label, selected, onClick }) {
 
 // ─── Step panels ─────────────────────────────────────────────────────────────
 
-function StepCompany({ data, set }) {
+function StepCompany({ data, set, errors = {} }) {
   const f = (k) => (e) => set(p => ({ ...p, [k]: e.target.value }));
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextInput label="First Name" required id="fn" placeholder="James" value={data.firstName} onChange={f('firstName')} />
-        <TextInput label="Last Name" required id="ln" placeholder="Miller" value={data.lastName} onChange={f('lastName')} />
+        <TextInput label="First Name" required id="fn" placeholder="James" value={data.firstName} onChange={f('firstName')} error={errors.firstName} />
+        <TextInput label="Last Name" required id="ln" placeholder="Miller" value={data.lastName} onChange={f('lastName')} error={errors.lastName} />
       </div>
-      <TextInput label="Company / Brand Name" required id="co" placeholder="Blaze United FC" value={data.company} onChange={f('company')} />
+      <TextInput label="Company / Brand Name" id="co" placeholder="Blaze United FC" value={data.company} onChange={f('company')} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextInput label="Business Email" required id="em" type="email" placeholder="james@blazeunited.com" value={data.email} onChange={f('email')} />
+        <TextInput label="Business Email" required id="em" type="email" placeholder="james@blazeunited.com" value={data.email} onChange={f('email')} error={errors.email} />
         <TextInput label="WhatsApp / Phone" id="ph" placeholder="+1 555 000 0000" value={data.phone} onChange={f('phone')} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextInput label="Country" required id="cn" placeholder="Germany" value={data.country} onChange={f('country')} />
+        <TextInput label="Country" id="cn" placeholder="Germany" value={data.country} onChange={f('country')} />
         <TextInput label="Website" id="web" placeholder="https://blazeunited.com" value={data.website} onChange={f('website')} />
       </div>
       <SelectInput label="How did you hear about us?" id="src" value={data.source} onChange={f('source')}>
@@ -240,12 +249,13 @@ function StepCompany({ data, set }) {
   );
 }
 
-function StepProduct({ data, set }) {
+function StepProduct({ data, set, errors = {} }) {
   const toggleArr = (k, v) => set(p => ({ ...p, [k]: p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v] }));
   return (
     <div className="space-y-8">
       <div>
-        <FieldLabel hint="Select all that apply">Product Category *</FieldLabel>
+        <FieldLabel hint="Select all that apply" required>Product Category</FieldLabel>
+        {errors.productTypes && <p className="text-[10px] text-red-500 font-semibold mb-3">{errors.productTypes}</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
           {PRODUCT_TYPES.map(pt => (
             <ProductCard key={pt.id} item={pt}
@@ -276,13 +286,14 @@ function StepProduct({ data, set }) {
   );
 }
 
-function StepSpecs({ data, set }) {
+function StepSpecs({ data, set, errors = {} }) {
   const f = (k) => (e) => set(p => ({ ...p, [k]: e.target.value }));
   const toggleArr = (k, v) => set(p => ({ ...p, [k]: p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v] }));
   return (
     <div className="space-y-8">
       <div>
         <FieldLabel required>Order Quantity</FieldLabel>
+        {errors.moq && <p className="text-[10px] text-red-500 font-semibold mb-3">{errors.moq}</p>}
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5 mt-1">
           {MOQ_RANGES.map(r => (
             <MoqCard key={r} label={r} selected={data.moq === r} onClick={() => set(p => ({ ...p, moq: r }))} />
@@ -306,12 +317,12 @@ function StepSpecs({ data, set }) {
       </div>
 
       <div>
-        <FieldLabel required>Required Timeline</FieldLabel>
+        <FieldLabel>Required Timeline</FieldLabel>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-1">
           {TIMELINES.map(t => (
             <button key={t} type="button" onClick={() => set(p => ({ ...p, timeline: t }))}
               className={`flex items-center justify-between px-4 py-3.5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
-                data.timeline === t ? 'bg-black border-black' : 'bg-white border-neutral-200 hover:border-neutral-300'
+                data.timeline === t ? 'bg-black border-black text-white' : 'bg-white border-neutral-200 hover:border-neutral-355'
               }`}
             >
               <span className={`text-[10px] font-black uppercase tracking-wider ${data.timeline === t ? 'text-white' : 'text-black'}`}>{t}</span>
@@ -334,8 +345,49 @@ function StepSpecs({ data, set }) {
 }
 
 function StepBranding({ data, set }) {
+  const [uploading, setUploading] = useState(false);
   const f = (k) => (e) => set(p => ({ ...p, [k]: e.target.value }));
   const toggleArr = (k, v) => set(p => ({ ...p, [k]: p[k].includes(v) ? p[k].filter(x => x !== v) : [...p[k], v] }));
+
+  const handleFileUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    setUploading(true);
+    try {
+      const newAttachments = [...(data.attachments || [])];
+
+      for (const file of files) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const res = await fetch('/api/admin/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (res.ok) {
+          const result = await res.json();
+          if (result.success) {
+            newAttachments.push(result.url);
+          }
+        }
+      }
+
+      set(p => ({ ...p, attachments: newAttachments }));
+    } catch (err) {
+      console.error('File upload error:', err);
+      alert('Failed to upload some files. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleRemoveAttachment = (idx) => {
+    const newAttachments = (data.attachments || []).filter((_, i) => i !== idx);
+    set(p => ({ ...p, attachments: newAttachments }));
+  };
+
   return (
     <div className="space-y-8">
       <div>
@@ -365,6 +417,63 @@ function StepBranding({ data, set }) {
           <option>No — starting from scratch</option>
           <option>In progress — will send soon</option>
         </SelectInput>
+      </div>
+
+      {/* File Upload Zone */}
+      <div>
+        <FieldLabel hint="Upload PDF, AI, ZIP, PNG, or JPG (Max 15MB)">
+          Design Assets & Tech Pack Files
+        </FieldLabel>
+        
+        <div className="mt-1 space-y-4">
+          <div className="border-2 border-dashed border-neutral-200 hover:border-black rounded-xl p-6 text-center transition-all duration-300 relative bg-neutral-50/50">
+            <input
+              type="file"
+              multiple
+              id="file-upload"
+              onChange={handleFileUpload}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              disabled={uploading}
+            />
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <div className="h-10 w-10 rounded-full bg-white border border-neutral-100 flex items-center justify-center text-neutral-500 shadow-sm">
+                <Send className="h-4 w-4 -rotate-90 text-neutral-400" />
+              </div>
+              <div>
+                <p className="text-xs font-black uppercase tracking-wider text-black">
+                  {uploading ? 'Uploading Files...' : 'Select or Drop Design Files'}
+                </p>
+                <p className="text-[9px] text-neutral-400 mt-1">
+                  AI, PDF, EPS, PNG, JPG, or ZIP files supported
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Uploaded Attachments list */}
+          {data.attachments && data.attachments.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {data.attachments.map((url, idx) => {
+                const name = url.split('/').pop() || `Attachment-${idx + 1}`;
+                return (
+                  <div key={idx} className="flex items-center justify-between border border-neutral-200 bg-white rounded-xl p-3 shadow-sm">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <FileText className="h-4 w-4 text-neutral-500 flex-shrink-0" />
+                      <span className="text-[10px] font-bold text-neutral-700 truncate max-w-[150px]">{name}</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveAttachment(idx)}
+                      className="text-[9px] font-black uppercase tracking-wider text-red-500 hover:text-red-700 cursor-pointer p-1.5 transition-colors"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </div>
 
       <div>
@@ -443,11 +552,14 @@ function StepReview({ d }) {
         { key: 'Assets',     val: d.details.assets },
         { key: 'Tech Pack',  val: d.details.techPack },
         { key: 'Packaging',  val: d.details.packaging },
+        { key: 'Attachments',val: d.details.attachments && d.details.attachments.length > 0 
+            ? d.details.attachments.map((url, i) => `Tech Pack ${i + 1}`) 
+            : null },
         { key: 'Notes',      val: d.details.notes },
       ]} />
 
       <p className="text-[8px] text-neutral-400 leading-relaxed px-1">
-        By submitting you agree to be contacted by the ABI Sports B2B sales team. Your information is kept strictly confidential and never shared with third parties.
+        By submitting you agree to be contacted by the Al Badar Impex B2B sales team. Your information is kept strictly confidential and never shared with third parties.
       </p>
     </div>
   );
@@ -515,14 +627,132 @@ const INIT = {
   company:  { firstName: '', lastName: '', company: '', email: '', phone: '', country: '', website: '', source: '' },
   product:  { productTypes: [], fabrics: [], productDesc: '' },
   specs:    { moq: '', colorways: '', styles: '', timeline: '', budget: '', sizes: [] },
-  details:  { printMethods: [], assets: '', techPack: '', packaging: [], notes: '' },
+  details:  { printMethods: [], assets: '', techPack: '', packaging: [], notes: '', attachments: [] },
 };
 
 export default function QuoteForm() {
   const [step, setStep]         = useState(1);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [data, setData]         = useState(INIT);
+  const [errors, setErrors]     = useState({});
   const topRef                  = useRef(null);
+
+  const validateStep = (stepNum) => {
+    const err = {};
+    if (stepNum === 1) {
+      if (!data.company.firstName?.trim()) err.firstName = 'First name is required';
+      if (!data.company.lastName?.trim()) err.lastName = 'Last name is required';
+      if (!data.company.email?.trim()) {
+        err.email = 'Email is required';
+      } else if (!/\S+@\S+\.\S+/.test(data.company.email)) {
+        err.email = 'Please enter a valid email address';
+      }
+    }
+    if (stepNum === 2) {
+      if (!data.product.productTypes || data.product.productTypes.length === 0) {
+        err.productTypes = 'Please select at least one product category to continue';
+      }
+    }
+    if (stepNum === 3) {
+      if (!data.specs.moq) {
+        err.moq = 'Please select an order quantity range';
+      }
+    }
+    setErrors(err);
+    return Object.keys(err).length === 0;
+  };
+
+  const handleContinue = () => {
+    if (validateStep(step)) {
+      setErrors({});
+      goTo(step + 1);
+    }
+  };
+
+  const handleSubmit = async () => {
+    // Validate everything across all steps
+    const combinedErrors = {};
+    
+    // Validate Step 1
+    if (!data.company.firstName?.trim()) combinedErrors.firstName = 'First name is required';
+    if (!data.company.lastName?.trim()) combinedErrors.lastName = 'Last name is required';
+    if (!data.company.email?.trim()) {
+      combinedErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(data.company.email)) {
+      combinedErrors.email = 'Please enter a valid email address';
+    }
+
+    // Validate Step 2
+    if (!data.product.productTypes || data.product.productTypes.length === 0) {
+      combinedErrors.productTypes = 'Product Category is required';
+    }
+
+    // Validate Step 3
+    if (!data.specs.moq) combinedErrors.moq = 'Order Quantity is required';
+
+    if (Object.keys(combinedErrors).length > 0) {
+      setErrors(combinedErrors);
+      // Navigate to the first step containing errors
+      if (combinedErrors.firstName || combinedErrors.lastName || combinedErrors.email) {
+        goTo(1);
+      } else if (combinedErrors.productTypes) {
+        goTo(2);
+      } else if (combinedErrors.moq) {
+        goTo(3);
+      }
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const payload = {
+        firstName: data.company.firstName,
+        lastName: data.company.lastName,
+        company: data.company.company,
+        email: data.company.email,
+        phone: data.company.phone,
+        country: data.company.country,
+        website: data.company.website,
+        source: data.company.source,
+        productTypes: data.product.productTypes,
+        fabrics: data.product.fabrics,
+        productDesc: data.product.productDesc,
+        moq: data.specs.moq,
+        colorways: data.specs.colorways,
+        styles: data.specs.styles,
+        timeline: data.specs.timeline,
+        budget: data.specs.budget,
+        sizes: data.specs.sizes,
+        printMethods: data.details.printMethods,
+        assets: data.details.assets,
+        techPack: data.details.techPack,
+        packaging: data.details.packaging,
+        notes: data.details.notes,
+        attachments: data.details.attachments || []
+      };
+
+      const res = await fetch('/api/quotations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        const err = await res.json();
+        alert(err.error || 'Failed to submit quotation request. Please try again.');
+      }
+    } catch (err) {
+      console.error('Submission error:', err);
+      alert('Network error: failed to connect to inquiry server.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const update = (section) => (val) =>
     setData(p => ({ ...p, [section]: typeof val === 'function' ? val(p[section]) : val }));
@@ -535,217 +765,149 @@ export default function QuoteForm() {
   if (submitted) return <SuccessScreen name={data.company.firstName || 'there'} email={data.company.email} />;
 
   const panels = [
-    <StepCompany  key={1} data={data.company} set={update('company')} />,
-    <StepProduct  key={2} data={data.product} set={update('product')} />,
-    <StepSpecs    key={3} data={data.specs}   set={update('specs')} />,
+    <StepCompany  key={1} data={data.company} set={update('company')} errors={errors} />,
+    <StepProduct  key={2} data={data.product} set={update('product')} errors={errors} />,
+    <StepSpecs    key={3} data={data.specs}   set={update('specs')} errors={errors} />,
     <StepBranding key={4} data={data.details} set={update('details')} />,
     <StepReview   key={5} d={data} />,
   ];
 
   return (
-    <div className="min-h-screen bg-[#f9fafb]" ref={topRef}>
+    <div className="min-h-screen bg-[#fafafa] py-12 sm:py-16" ref={topRef}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-      {/* ── Page header ── */}
-      <div className="bg-white border-b border-neutral-200">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 pt-10 pb-8">
+        {/* ── 2-Column Layout Grid ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 
-          {/* Title row */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8">
-            <div>
-              <span className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-neutral-400 block mb-2 font-mono">B2B Manufacturing Inquiry</span>
-              <h1 className="text-3xl sm:text-4xl font-black uppercase tracking-tight text-black leading-tight">
-                Request a Production Quote
-              </h1>
-              <div className="h-0.5 w-12 bg-black mt-4" />
-            </div>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              {TRUST.map(({ icon: Icon, text }, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <Icon className="h-3.5 w-3.5 text-black flex-shrink-0" />
-                  <span className="text-[8px] font-extrabold uppercase tracking-wider text-neutral-500">{text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* ── LEFT: B2B Brand Sidebar Info ── */}
+          <div className="lg:col-span-4 bg-neutral-950 text-white rounded-2xl p-8 border border-neutral-900 shadow-2xl relative overflow-hidden lg:sticky lg:top-8">
+            {/* Ambient light glow */}
+            <div className="absolute -top-40 -left-40 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none" />
 
-          {/* ── Horizontal step tracker ── */}
-          <div className="flex items-center gap-0">
-            {STEPS.map((s, i) => {
-              const done   = step > s.id;
-              const active = step === s.id;
-              const Icon   = s.icon;
-              return (
-                <React.Fragment key={s.id}>
-                  <button
-                    type="button"
-                    onClick={() => done && goTo(s.id)}
-                    className={`flex flex-col items-center gap-1.5 flex-shrink-0 transition-all duration-300 ${
-                      done ? 'cursor-pointer' : 'cursor-default'
-                    }`}
-                  >
-                    <div className={`h-9 w-9 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${
-                      active
-                        ? 'bg-black border-black text-white scale-110 shadow-md'
-                        : done
-                        ? 'bg-neutral-800 border-neutral-800 text-white'
-                        : 'bg-white border-neutral-200 text-neutral-400'
-                    }`}>
-                      {done
-                        ? <Check className="h-3.5 w-3.5" />
-                        : <Icon className="h-3.5 w-3.5" />
-                      }
+            <div className="relative z-10 space-y-8">
+              {/* Brand Header */}
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-[0.25em] text-neutral-500 font-mono block mb-2">Manufacturing Partner</span>
+                <h2 className="text-2xl font-black uppercase tracking-tight text-white leading-tight">
+                  Al Badar Impex
+                </h2>
+                <p className="text-[11px] font-medium text-neutral-450 mt-2.5 leading-relaxed">
+                  Established in 2011. Vertically integrated OEM sportswear and activewear manufacturer in Sialkot, Pakistan, producing premium apparel for athletic brands and professional leagues worldwide.
+                </p>
+              </div>
+
+              {/* Credentials standard certifications */}
+              <div className="border-t border-neutral-900 pt-6 space-y-4">
+                <span className="text-[9px] font-black uppercase tracking-wider text-neutral-500 block font-mono">Factory Credentials</span>
+                <div className="space-y-4">
+                  {[
+                    { title: 'ISO 9001:2015 Approved', desc: 'Quality Management Certified Facilities' },
+                    { title: 'WRAP Certified Factory', desc: 'Worldwide Responsible Accredited Production' },
+                    { title: 'SGS Audited Textiles', desc: 'Strict material safety and performance validation' }
+                  ].map((item, idx) => (
+                    <div key={idx} className="flex gap-3">
+                      <div className="h-2 w-2 rounded-full bg-white mt-1.5 flex-shrink-0" />
+                      <div>
+                        <p className="text-xs font-bold text-white uppercase tracking-wide leading-tight">{item.title}</p>
+                        <p className="text-[10px] text-neutral-405 font-light mt-0.5">{item.desc}</p>
+                      </div>
                     </div>
-                    <span className={`text-[8px] font-extrabold uppercase tracking-wider hidden sm:block ${
-                      active ? 'text-black' : done ? 'text-neutral-500' : 'text-neutral-300'
-                    }`}>{s.label}</span>
-                  </button>
-
-                  {/* Connector line between steps */}
-                  {i < STEPS.length - 1 && (
-                    <div className="flex-1 h-px mx-2 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-neutral-200 rounded-full" />
-                      <motion.div
-                        className="absolute inset-y-0 left-0 bg-black rounded-full"
-                        animate={{ width: done ? '100%' : '0%' }}
-                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                      />
-                    </div>
-                  )}
-                </React.Fragment>
-              );
-            })}
-          </div>
-
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-          {/* ── LEFT: Sidebar ── */}
-          <div className="lg:col-span-3 lg:sticky lg:top-8 space-y-4">
-
-            {/* Steps list */}
-            <div className="bg-white border border-neutral-200 rounded-2xl overflow-hidden">
-              <div className="px-5 py-4 border-b border-neutral-100">
-                <span className="text-[8px] font-extrabold uppercase tracking-widest text-neutral-400">Your Progress</span>
-                <div className="flex items-center justify-between mt-2">
-                  <div className="flex-1 h-1 bg-neutral-100 rounded-full overflow-hidden mr-3">
-                    <motion.div className="h-full bg-black rounded-full origin-left"
-                      animate={{ scaleX: (step - 1) / (STEPS.length - 1) }}
-                      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                  </div>
-                  <span className="text-[9px] font-black text-neutral-500 font-mono flex-shrink-0">{step}/{STEPS.length}</span>
+                  ))}
                 </div>
               </div>
 
-              <div className="divide-y divide-neutral-50">
-                {STEPS.map((s) => {
+              {/* Manufacturing Metrics */}
+              <div className="border-t border-neutral-900 pt-6 space-y-4">
+                <span className="text-[9px] font-black uppercase tracking-wider text-neutral-500 block font-mono">Production Commitments</span>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { val: '12-Hour', label: 'RFQ Response' },
+                    { val: '72-Hour', label: 'Sample Dispatch' },
+                    { val: '60+', label: 'Countries Shipped' },
+                    { val: '50 Pcs', label: 'Minimum Order' }
+                  ].map((metric, idx) => (
+                    <div key={idx} className="bg-neutral-900/40 border border-neutral-900 rounded-xl p-3.5">
+                      <p className="text-sm font-black uppercase tracking-tight text-white font-mono">{metric.val}</p>
+                      <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-400 mt-0.5">{metric.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Contact Information Support */}
+              <div className="border-t border-neutral-900 pt-6 space-y-3">
+                <span className="text-[9px] font-black uppercase tracking-wider text-neutral-500 block font-mono">B2B Support Desk</span>
+                <div className="text-[10px] sm:text-xs text-neutral-400 font-medium space-y-2">
+                  <p className="flex items-center gap-2"><Mail className="h-3.5 w-3.5 text-neutral-500" /> inquiries@albadarimpex.com</p>
+                  <p className="flex items-center gap-2"><Phone className="h-3.5 w-3.5 text-neutral-500" /> +92 (300) 123-4567</p>
+                  <p className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5 text-neutral-500" /> Sialkot Industrial Zone, Pakistan</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          {/* ── RIGHT: Multi-step Form Card ── */}
+          <div className="lg:col-span-8 space-y-6">
+
+            {/* Stepper Timeline Tracker */}
+            <div className="bg-white border border-neutral-200 rounded-2xl p-5 shadow-xs">
+              <div className="flex flex-wrap items-center justify-between gap-y-3">
+                {STEPS.map((s, i) => {
                   const done   = step > s.id;
                   const active = step === s.id;
-                  const Icon   = s.icon;
+                  const handleClick = () => {
+                    if (done) {
+                      setErrors({});
+                      goTo(s.id);
+                    }
+                  };
                   return (
-                    <button
-                      key={s.id} type="button"
-                      onClick={() => done && goTo(s.id)}
-                      className={`w-full flex items-center gap-3 px-5 py-3.5 text-left transition-all duration-200 ${
-                        active ? 'bg-neutral-950 cursor-default'
-                        : done  ? 'hover:bg-neutral-50 cursor-pointer'
-                        : 'opacity-35 cursor-default'
-                      }`}
-                    >
-                      <div className={`h-6 w-6 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-200 ${
-                        active ? 'bg-white' : done ? 'bg-neutral-700' : 'bg-neutral-200'
-                      }`}>
-                        {done
-                          ? <Check className="h-2.5 w-2.5 text-white" />
-                          : <Icon className={`h-2.5 w-2.5 ${active ? 'text-black' : 'text-neutral-500'}`} />
-                        }
-                      </div>
-                      <div className="min-w-0 flex-grow">
-                        <p className={`text-[9px] font-black uppercase tracking-wider truncate ${
-                          active ? 'text-white' : done ? 'text-neutral-600' : 'text-neutral-400'
-                        }`}>{s.label}</p>
-                        <p className={`text-[7.5px] font-medium truncate mt-0.5 ${
-                          active ? 'text-neutral-500' : 'text-neutral-400'
-                        }`}>{s.desc}</p>
-                      </div>
-                      {done && (
-                        <span className="text-[7px] font-extrabold text-neutral-400 uppercase tracking-wider flex-shrink-0">Done</span>
+                    <React.Fragment key={s.id}>
+                      <button
+                        type="button"
+                        onClick={handleClick}
+                        className={`flex items-center gap-2 transition-all duration-200 ${done ? 'cursor-pointer hover:opacity-85' : 'cursor-default'}`}
+                      >
+                        <span className={`text-[10px] sm:text-xs font-mono font-bold ${active ? 'text-black font-black' : done ? 'text-neutral-600' : 'text-neutral-400'}`}>
+                          0{s.id}
+                        </span>
+                        <span className={`text-[9px] sm:text-[10px] font-black uppercase tracking-wider transition-all duration-300 ${active ? 'text-black border-b-2 border-black pb-0.5' : done ? 'text-neutral-600' : 'text-neutral-400'}`}>
+                          {s.label}
+                        </span>
+                      </button>
+                      {i < STEPS.length - 1 && (
+                        <span className="text-neutral-300 mx-1.5 hidden md:inline">/</span>
                       )}
-                    </button>
+                    </React.Fragment>
                   );
                 })}
               </div>
             </div>
 
-            {/* Trust card */}
-            <div className="bg-white border border-neutral-200 rounded-2xl p-5 space-y-3 relative overflow-hidden">
-              <div className="absolute top-0 left-0 right-0 h-[2px] bg-black" />
-              <span className="text-[8px] font-extrabold uppercase tracking-widest text-neutral-400 block">Why ABI Sports</span>
-              {TRUST.map(({ icon: Icon, text }, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className="h-7 w-7 rounded-lg bg-neutral-50 border border-neutral-100 flex items-center justify-center flex-shrink-0">
-                    <Icon className="h-3 w-3 text-black" />
-                  </div>
-                  <span className="text-[9px] font-bold text-neutral-600 leading-tight">{text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Estimated time */}
-            <div className="bg-[#f9fafb] border border-neutral-200 rounded-2xl p-4 flex items-start gap-3">
-              <Clock className="h-4 w-4 text-neutral-400 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="text-[9px] font-black uppercase tracking-wider text-neutral-600">Est. ~8 minutes</p>
-                <p className="text-[8px] font-light text-neutral-400 mt-0.5 leading-snug">to complete all 5 steps. We respond within 12 business hours.</p>
-              </div>
-            </div>
-
-          </div>
-
-          {/* ── RIGHT: Form card ── */}
-          <div className="lg:col-span-9">
+            {/* Form Box */}
             <div className="bg-white rounded-2xl border border-neutral-200 shadow-sm overflow-hidden">
-
-              {/* ── Card header ── */}
-              <div className="px-7 pt-6 pb-5 border-b border-neutral-100">
-
-                {/* Step name + description */}
-                <div className="flex items-center justify-between gap-4 mb-5">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-xl bg-black flex items-center justify-center flex-shrink-0">
-                      {(() => { const Icon = STEPS[step - 1].icon; return <Icon className="h-3.5 w-3.5 text-white" />; })()}
-                    </div>
-                    <div>
-                      <h2 className="text-sm font-black uppercase tracking-wider text-black leading-tight">
-                        {STEPS[step - 1].label}
-                      </h2>
-                      <p className="text-[9px] font-light text-neutral-400 mt-0.5">{STEPS[step - 1].desc}</p>
-                    </div>
+              
+              {/* Form Box Header */}
+              <div className="px-6 sm:px-8 pt-6 pb-5 border-b border-neutral-100 bg-neutral-50/30 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-7 w-7 rounded-lg bg-black flex items-center justify-center flex-shrink-0">
+                    {(() => { const Icon = STEPS[step - 1].icon; return <Icon className="h-3.5 w-3.5 text-white" />; })()}
                   </div>
-                  <span className="text-[8px] font-extrabold uppercase tracking-widest text-neutral-300 font-mono flex-shrink-0">
-                    Step {step} of {STEPS.length}
-                  </span>
+                  <div>
+                    <h2 className="text-xs sm:text-sm font-black uppercase tracking-wider text-black leading-none">
+                      {STEPS[step - 1].label}
+                    </h2>
+                    <p className="text-[9px] font-medium text-neutral-400 mt-1 leading-none">{STEPS[step - 1].desc}</p>
+                  </div>
                 </div>
-
-                {/* Segmented progress bar */}
-                <div className="flex gap-1.5">
-                  {STEPS.map((s, i) => (
-                    <motion.div
-                      key={s.id}
-                      className={`flex-1 h-1.5 rounded-full transition-colors duration-400 ${
-                        i < step ? 'bg-black' : 'bg-neutral-100'
-                      }`}
-                      layout
-                    />
-                  ))}
-                </div>
+                <span className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-400 font-mono">
+                  {step} / {STEPS.length}
+                </span>
               </div>
 
-              {/* ── Form body ── */}
-              <div className="px-7 py-8">
+              {/* Form Box Body */}
+              <div className="px-6 sm:px-8 py-8">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={step}
@@ -759,9 +921,8 @@ export default function QuoteForm() {
                 </AnimatePresence>
               </div>
 
-              {/* ── Navigation footer ── */}
-              <div className="px-7 py-5 border-t border-neutral-100 flex items-center justify-between gap-4">
-
+              {/* Form Box Footer */}
+              <div className="px-6 sm:px-8 py-5 border-t border-neutral-100 flex items-center justify-between gap-4 bg-neutral-50/10">
                 <button
                   type="button"
                   onClick={() => goTo(step - 1)}
@@ -777,25 +938,11 @@ export default function QuoteForm() {
                 </button>
 
                 <div className="flex items-center gap-4">
-                  {/* Dot trail */}
-                  <div className="hidden sm:flex items-center gap-1.5">
-                    {STEPS.map((_, i) => (
-                      <div
-                        key={i}
-                        className={`rounded-full transition-all duration-300 ${
-                          i === step - 1 ? 'w-5 h-1.5 bg-black'
-                          : i < step - 1  ? 'w-1.5 h-1.5 bg-neutral-400'
-                          : 'w-1.5 h-1.5 bg-neutral-200'
-                        }`}
-                      />
-                    ))}
-                  </div>
-
                   {step < STEPS.length ? (
                     <button
                       type="button"
-                      onClick={() => goTo(step + 1)}
-                      className="inline-flex items-center gap-2 text-[9px] font-extrabold uppercase tracking-widest text-white bg-black hover:bg-neutral-800 rounded-xl px-6 py-3 transition-all duration-200 cursor-pointer"
+                      onClick={handleContinue}
+                      className="inline-flex items-center gap-2 text-[9px] font-extrabold uppercase tracking-widest text-white bg-black hover:bg-neutral-800 rounded-xl px-6 py-3 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md"
                     >
                       Continue
                       <ArrowRight className="h-3.5 w-3.5" />
@@ -803,19 +950,23 @@ export default function QuoteForm() {
                   ) : (
                     <button
                       type="button"
-                      onClick={() => setSubmitted(true)}
-                      className="inline-flex items-center gap-2 text-[9px] font-extrabold uppercase tracking-widest text-white bg-black hover:bg-neutral-800 rounded-xl px-6 py-3 transition-all duration-200 cursor-pointer"
+                      onClick={handleSubmit}
+                      disabled={submitting}
+                      className="inline-flex items-center gap-2 text-[9px] font-extrabold uppercase tracking-widest text-white bg-black hover:bg-neutral-800 disabled:bg-neutral-400 disabled:cursor-not-allowed rounded-xl px-6 py-3 transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md"
                     >
                       <Send className="h-3.5 w-3.5" />
-                      Submit Quote Request
+                      {submitting ? 'Submitting Quote...' : 'Submit Quote Request'}
                     </button>
                   )}
                 </div>
               </div>
 
             </div>
+
           </div>
+
         </div>
+
       </div>
     </div>
   );

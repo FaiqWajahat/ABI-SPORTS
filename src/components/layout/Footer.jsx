@@ -17,11 +17,11 @@ const Footer = () => {
           <div className="lg:col-span-2 space-y-6 text-left">
             <Link href="/" className="inline-block">
               <span className="text-xl font-black tracking-tighter text-white uppercase font-sans">
-                ABI<span className="text-white opacity-80">SPORTS</span>
+                AL BADAR <span className="text-white opacity-80">IMPEX</span>
               </span>
             </Link>
             <p className="text-xs text-neutral-500 font-light leading-relaxed max-w-sm">
-              Premium custom sportswear and team uniform manufacturer. Based in Sialkot, Pakistan, we operate a fully vertically integrated production line to engineer, mill, sew, and export technical apparel to leading sports brands worldwide.
+              Al Badar Impex is a leading custom apparel manufacturer specializing in premium-quality Activewear, Swimwear, Teamwear, and Streetwear. We provide end-to-end manufacturing solutions, from design and fabric sourcing to printing, embroidery, and worldwide delivery.
             </p>
             <div className="pt-2 flex flex-wrap gap-2">
               {['WRAP Certified', 'SEDEX Compliant', 'ISO 9001:2015'].map((badge) => (
@@ -112,7 +112,7 @@ const Footer = () => {
       {/* Copyright area */}
       <div className="border-t border-neutral-900 bg-black py-8 px-4 sm:px-6 lg:px-8 text-[10px] font-semibold uppercase tracking-wider text-neutral-600 font-mono">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p>© {new Date().getFullYear()} ABI Sports Corporation. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Al Badar Impex. All rights reserved.</p>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-neutral-400 transition-colors">Privacy Policy</Link>
             <span>·</span>

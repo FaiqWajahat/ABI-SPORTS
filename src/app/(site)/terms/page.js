@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { ArrowLeft, Landmark, FileCheck, Truck, Scale, ShieldAlert } from 'lucide-react';
 
 export const metadata = {
-  title: 'Terms of Service | ABI SPORTS — B2B Sportswear Manufacturers',
+  title: 'Terms of Service | Al Badar Impex — B2B Sportswear Manufacturers',
   description:
-    'Read the ABI Sports terms of service. Learn about B2B pricing quote validity, payment structures, prototyping policies, size tolerances, and bulk shipping agreements.',
+    'Read the Al Badar Impex terms of service. Learn about B2B pricing quote validity, payment structures, prototyping policies, size tolerances, and bulk shipping agreements.',
 };
 
 export default function TermsPage() {
@@ -14,7 +14,7 @@ export default function TermsPage() {
       icon: FileCheck,
       title: '1. B2B Quotes & Pricing Validity',
       content:
-        'All production quotes issued by ABI Sports are valid for exactly 30 calendar days from date of issuance. Due to global cotton, polyester yarn, and dye chemical cost fluctuations, prices may be adjusted beyond this window. Quotes do not include shipping freight, import customs tariffs, or localized VAT, which are itemized separately upon final invoice generation.',
+        'All production quotes issued by Al Badar Impex are valid for exactly 30 calendar days from date of issuance. Due to global cotton, polyester yarn, and dye chemical cost fluctuations, prices may be adjusted beyond this window. Quotes do not include shipping freight, import customs tariffs, or localized VAT, which are itemized separately upon final invoice generation.',
     },
     {
       icon: Landmark,
@@ -32,7 +32,7 @@ export default function TermsPage() {
       icon: Truck,
       title: '4. Shipping, Logistics & Delivery Duties',
       content:
-        'Unless explicitly specified as DDP (Delivered Duty Paid), all bulk orders are shipped FOB (Free on Board) from Sialkot/Karachi ports. Risk of loss and title transfer pass to the buyer once the carrier logs the shipment. Delivery lead times are estimates; ABI Sports is not liable for cargo transit delays caused by customs port congestion or global carrier capacity shortages.',
+        'Unless explicitly specified as DDP (Delivered Duty Paid), all bulk orders are shipped FOB (Free on Board) from Sialkot/Karachi ports. Risk of loss and title transfer pass to the buyer once the carrier logs the shipment. Delivery lead times are estimates; Al Badar Impex is not liable for cargo transit delays caused by customs port congestion or global carrier capacity shortages.',
     },
     {
       icon: ShieldAlert,
@@ -70,7 +70,7 @@ export default function TermsPage() {
           </h1>
           <div className="h-0.5 w-12 bg-black mt-4 mb-4" />
           <p className="text-neutral-500 text-sm font-light leading-relaxed max-w-2xl">
-            These terms govern B2B sportswear custom manufacturing and logistics agreements between ABI Sports and purchase organizations. Please review these specifications before initiating prototyping.
+            These terms govern B2B sportswear custom manufacturing and logistics agreements between Al Badar Impex and purchase organizations. Please review these specifications before initiating prototyping.
           </p>
         </div>
 
@@ -116,7 +116,7 @@ export default function TermsPage() {
               legal@abisportswear.com
             </a>
             <span className="hidden sm:inline text-neutral-300">|</span>
-            <span className="text-neutral-500 font-medium">ABI Sports Corp — Legal & Contract Division</span>
+            <span className="text-neutral-500 font-medium">Al Badar Impex — Legal & Contract Division</span>
           </div>
         </div>
       </div>

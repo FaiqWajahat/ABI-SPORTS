@@ -327,10 +327,9 @@ export default function AdminProducts() {
       </div>
 
       {/* Stats Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {[
           { label: 'Total Products', value: totalCount },
-          { label: 'Featured', value: featuredCount },
           { label: 'Active', value: activeCount },
           { label: 'Draft', value: draftCount },
         ].map((stat) => (
@@ -476,12 +475,6 @@ export default function AdminProducts() {
                         >
                           {product.status}
                         </span>
-                        {product.featured && (
-                          <span className="inline-flex items-center gap-1 rounded-full text-[8px] font-black uppercase tracking-wider px-2.5 py-0.5 bg-yellow-950/20 text-yellow-500 border border-yellow-900/30">
-                            <Sparkles className="h-2 w-2" />
-                            Featured
-                          </span>
-                        )}
                       </div>
                     </td>
 
@@ -783,21 +776,6 @@ export default function AdminProducts() {
                       </select>
                     </div>
                   </div>
-
-                  {/* Featured toggle */}
-                  <label className="flex items-center gap-3 cursor-pointer group">
-                    <input
-                      type="checkbox"
-                      id="featured"
-                      checked={featured}
-                      onChange={(e) => setFeatured(e.target.checked)}
-                      className="h-4 w-4 bg-neutral-900 border border-neutral-800 rounded focus:ring-0 cursor-pointer accent-white"
-                      disabled={submitting}
-                    />
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 group-hover:text-white transition-colors">
-                      Featured on Homepage
-                    </span>
-                  </label>
 
                   {/* Image Upload Zone */}
                   <div className="space-y-3">

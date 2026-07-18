@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
@@ -12,6 +12,12 @@ import {
 } from 'lucide-react';
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/animations';
 import { CATEGORIES, PRODUCTS, SIZING_GUIDES } from '@/data/productsData';
+
+// Swiper slider imports
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 // ─── FAQ DATA ────────────────────────────────────────────────────────────────
 const B2B_FAQS = [
@@ -74,6 +80,21 @@ function FaqAccordionItem({ item, isOpen, onClick }) {
   );
 }
 
+// Sizing converter utility (Inches to Centimeters)
+const convertToCm = (str) => {
+  if (!str) return '';
+  let clean = str.replace('"', '');
+  if (clean.includes('-')) {
+    let parts = clean.split('-');
+    let min = Math.round(parseFloat(parts[0]) * 2.54);
+    let max = Math.round(parseFloat(parts[1]) * 2.54);
+    return `${min}-${max} cm`;
+  } else {
+    let num = Math.round(parseFloat(clean) * 2.54);
+    return `${num} cm`;
+  }
+};
+
 export default function ProductsClient() {
   const router = useRouter();
   const pathname = usePathname();
@@ -85,12 +106,20 @@ export default function ProductsClient() {
 
   const [activeFaq, setActiveFaq] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isCm, setIsCm] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const swiperRef = useRef(null);
   const itemsPerPage = 6;
 
   // Reset pagination when subcategory shifts
   useEffect(() => {
     setCurrentPage(1);
   }, [subParam]);
+
+  // Reset active image index when productParam changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [productParam]);
 
   const [dynamicCategories, setDynamicCategories] = useState(null);
   const [dynamicProducts, setDynamicProducts] = useState(null);
@@ -150,6 +179,7 @@ export default function ProductsClient() {
               subcategory: subSlug || '',
               priceRange: 'OEM Bulk Quote',
               image: p.images?.[0] || '/active-wear.png',
+              images: p.images && p.images.length > 0 ? p.images : ['/active-wear.png'],
               description: p.description || '',
               specs: [
                 p.specifications?.material ? `Material: ${p.specifications.material}` : null,
@@ -259,7 +289,7 @@ export default function ProductsClient() {
     // Find related products (same subcategory, excluding current)
     const relatedProducts = finalProducts.filter(
       (p) => p.subcategory === activeProduct.subcategory && p.id !== activeProduct.id
-    ).slice(0, 3);
+    );
 
     return (
       <div className="min-h-screen bg-white text-black py-12">
@@ -275,15 +305,15 @@ export default function ProductsClient() {
 
           {/* MAIN GRID BLOCK */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mt-4">
-            {/* Left: Product Image */}
-            <div className="lg:col-span-6">
+            {/* Left: Product Image & Gallery */}
+            <div className="lg:col-span-6 space-y-4">
               <div className="relative aspect-[4/5] rounded-xl overflow-hidden border border-neutral-200 bg-neutral-100 shadow-sm">
                 <Image
-                  src={activeProduct.image}
+                  src={(activeProduct.images && activeProduct.images[activeImageIndex]) || activeProduct.image}
                   alt={activeProduct.name}
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover object-center"
+                  className="object-cover object-center transition-all duration-300"
                   priority
                 />
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-black" />
@@ -291,6 +321,27 @@ export default function ProductsClient() {
                   Sialkot Certified
                 </div>
               </div>
+
+              {/* Thumbnails Row */}
+              {activeProduct.images && activeProduct.images.length > 1 && (
+                <div className="flex flex-wrap gap-2.5 pt-1">
+                  {activeProduct.images.map((imgUrl, imgIdx) => (
+                    <button
+                      key={imgIdx}
+                      onClick={() => setActiveImageIndex(imgIdx)}
+                      className={`relative h-16 w-16 rounded-lg overflow-hidden border cursor-pointer bg-neutral-50 transition-all duration-300 ${activeImageIndex === imgIdx ? 'border-black ring-1 ring-black shadow-sm' : 'border-neutral-200 hover:border-neutral-400'}`}
+                    >
+                      <Image
+                        src={imgUrl}
+                        alt={`${activeProduct.name} view ${imgIdx + 1}`}
+                        fill
+                        sizes="80px"
+                        className="object-cover object-center"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Right: Specifications & Specs Sheet */}
@@ -308,7 +359,7 @@ export default function ProductsClient() {
                 </span>
               </div>
 
-              <p className="text-neutral-600 text-sm font-light leading-relaxed">
+              <p className="text-neutral-600 text-sm font-light leading-relaxed break-words">
                 {activeProduct.description}
               </p>
 
@@ -368,16 +419,33 @@ export default function ProductsClient() {
           {activeProduct.performanceTech && (
             <div className="border-t border-neutral-200 pt-16 mt-16 text-left">
               <div className="max-w-3xl mb-8">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-450 block mb-2 font-mono">Product Engineering</span>
-                <h2 className="text-2xl font-black uppercase text-black">Performance Technology</h2>
-                <div className="h-0.5 w-8 bg-black mt-3" />
+                <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-450 block mb-2 font-mono">
+                  Product Engineering
+                </span>
+                <h2 className="text-2xl font-black uppercase text-black tracking-tight">
+                  Performance Technology
+                </h2>
+                <div className="h-0.5 w-12 bg-black mt-3" />
               </div>
-              <div className="bg-[#f9fafb] border border-neutral-200 rounded-xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-start">
-                <div className="h-10 w-10 rounded-xl bg-black flex items-center justify-center text-white flex-shrink-0 shadow-sm">
-                  <Activity className="h-5 w-5" />
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+                <div className="md:col-span-4 bg-neutral-950 text-white rounded-xl p-8 flex flex-col justify-between relative overflow-hidden">
+                  <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
+                    style={{ backgroundImage: 'linear-gradient(to right,#fff 1px,transparent 1px),linear-gradient(to bottom,#fff 1px,transparent 1px)', backgroundSize: '24px 24px' }}
+                  />
+                  <div>
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-500 block mb-2 font-mono">
+                      [ Material R&D ]
+                    </span>
+                    <h4 className="text-sm font-black uppercase tracking-wider mb-4">
+                      Fabric Construction
+                    </h4>
+                  </div>
+                  <div className="h-10 w-10 rounded-lg bg-neutral-900 border border-neutral-800 flex items-center justify-center text-white flex-shrink-0 shadow-inner mt-4">
+                    <Activity className="h-5 w-5" />
+                  </div>
                 </div>
-                <div>
-                  <p className="text-neutral-600 text-xs sm:text-sm font-light leading-relaxed">
+                <div className="md:col-span-8 bg-neutral-50 border border-neutral-200 rounded-xl p-8 flex flex-col justify-center overflow-hidden">
+                  <p className="text-neutral-700 text-xs sm:text-sm font-light leading-relaxed break-words">
                     {activeProduct.performanceTech}
                   </p>
                 </div>
@@ -388,113 +456,230 @@ export default function ProductsClient() {
           {/* SECTION: SIZING CHART & TECH FIT GUIDE */}
           {sizingGuide && (
             <div className="border-t border-neutral-200 pt-16 mt-16 text-left">
-              <div className="max-w-3xl mb-8">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-450 block mb-2 font-mono">Standard Fitment</span>
-                <h2 className="text-2xl font-black uppercase text-black">Sizing Chart & Specifications</h2>
-                <div className="h-0.5 w-8 bg-black mt-3" />
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+                <div>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-450 block mb-2 font-mono">
+                    Standard Fitment
+                  </span>
+                  <h2 className="text-2xl font-black uppercase text-black tracking-tight">
+                    Sizing Chart & Specifications
+                  </h2>
+                  <div className="h-0.5 w-12 bg-black mt-3" />
+                </div>
+                
+                {/* Clean minimalist Metric Toggle */}
+                <div className="flex items-center gap-1.5 bg-neutral-100 p-1.5 rounded-full border border-neutral-200 self-start sm:self-auto">
+                  <button
+                    onClick={() => setIsCm(false)}
+                    className={`px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider rounded-full transition-all duration-300 cursor-pointer ${!isCm ? 'bg-black text-white shadow-sm' : 'text-neutral-500 hover:text-black bg-transparent'}`}
+                  >
+                    Inches
+                  </button>
+                  <button
+                    onClick={() => setIsCm(true)}
+                    className={`px-3.5 py-1.5 text-[9px] font-extrabold uppercase tracking-wider rounded-full transition-all duration-300 cursor-pointer ${isCm ? 'bg-black text-white shadow-sm' : 'text-neutral-500 hover:text-black bg-transparent'}`}
+                  >
+                    Centimeters
+                  </button>
+                </div>
               </div>
               
-              <div className="border border-neutral-200 rounded-xl overflow-hidden shadow-sm max-w-2xl bg-white">
-                <div className="px-6 py-4 bg-[#f9fafb] border-b border-neutral-200">
-                  <p className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500 font-mono">
-                    Standard EU/US Body Measurements (inches)
-                  </p>
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs border-collapse">
-                    <thead>
-                      <tr className="border-b border-neutral-200 text-[9px] font-extrabold uppercase tracking-wider text-neutral-450 bg-neutral-50">
-                        <th className="px-6 py-3">Size</th>
-                        {activeProduct.sizingType === 'tops' ? (
-                          <>
-                            <th className="px-6 py-3">Chest</th>
-                            <th className="px-6 py-3">Length</th>
-                            <th className="px-6 py-3">Sleeve</th>
-                          </>
-                        ) : (
-                          <>
-                            <th className="px-6 py-3">Waist</th>
-                            <th className="px-6 py-3">Hip</th>
-                            <th className="px-6 py-3">Inseam</th>
-                          </>
-                        )}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-neutral-100 font-medium text-neutral-750">
-                      {sizingGuide.map((row) => (
-                        <tr key={row.size} className="hover:bg-neutral-50 transition-colors">
-                          <td className="px-6 py-3 font-black text-black">{row.size}</td>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Sizing Table */}
+                <div className="lg:col-span-8 border border-neutral-200 rounded-xl overflow-hidden shadow-sm bg-white w-full">
+                  <div className="px-6 py-4 bg-neutral-50 border-b border-neutral-200">
+                    <p className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500 font-mono">
+                      Standard EU/US Body Measurements ({isCm ? 'cm' : 'inches'})
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-xs border-collapse">
+                      <thead>
+                        <tr className="border-b border-neutral-200 text-[9px] font-extrabold uppercase tracking-wider text-neutral-400 bg-neutral-50/50">
+                          <th className="px-6 py-4">Size</th>
                           {activeProduct.sizingType === 'tops' ? (
                             <>
-                              <td className="px-6 py-3">{row.chest}</td>
-                              <td className="px-6 py-3">{row.length}</td>
-                              <td className="px-6 py-3">{row.sleeve}</td>
+                              <th className="px-6 py-4">Chest</th>
+                              <th className="px-6 py-4">Length</th>
+                              <th className="px-6 py-4">Sleeve</th>
                             </>
                           ) : (
                             <>
-                              <td className="px-6 py-3">{row.waist}</td>
-                              <td className="px-6 py-3">{row.hip}</td>
-                              <td className="px-6 py-3">{row.inseam}</td>
+                              <th className="px-6 py-4">Waist</th>
+                              <th className="px-6 py-4">Hip</th>
+                              <th className="px-6 py-4">Inseam</th>
                             </>
                           )}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="divide-y divide-neutral-100 font-medium text-neutral-800">
+                        {sizingGuide.map((row) => (
+                          <tr key={row.size} className="hover:bg-neutral-50/70 transition-colors">
+                            <td className="px-6 py-3.5 font-bold text-black">{row.size}</td>
+                            {activeProduct.sizingType === 'tops' ? (
+                              <>
+                                <td className="px-6 py-3.5">{isCm ? convertToCm(row.chest) : row.chest}</td>
+                                <td className="px-6 py-3.5">{isCm ? convertToCm(row.length) : row.length}</td>
+                                <td className="px-6 py-3.5">{isCm ? convertToCm(row.sleeve) : row.sleeve}</td>
+                              </>
+                            ) : (
+                              <>
+                                <td className="px-6 py-3.5">{isCm ? convertToCm(row.waist) : row.waist}</td>
+                                <td className="px-6 py-3.5">{isCm ? convertToCm(row.hip) : row.hip}</td>
+                                <td className="px-6 py-3.5">{isCm ? convertToCm(row.inseam) : row.inseam}</td>
+                              </>
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
-              <div className="flex gap-2 items-start mt-4 max-w-2xl text-[9px] font-semibold text-neutral-450 leading-relaxed pl-1 font-mono">
-                <Info className="h-3.5 w-3.5 text-neutral-400 flex-shrink-0 mt-0.5" />
-                <span>Custom pattern-grading is available during sample development. Specify your measurements in your tech pack if custom sizes are needed.</span>
+
+                {/* Sizing Help Panel */}
+                <div className="lg:col-span-4 space-y-6 w-full">
+                  <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-6 space-y-4">
+                    <span className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-450 block font-mono">
+                      How to Measure
+                    </span>
+                    {activeProduct.sizingType === 'tops' ? (
+                      <div className="space-y-3.5 text-xs text-neutral-600 font-light">
+                        <div>
+                          <strong className="text-black font-bold uppercase tracking-wider block text-[10px] mb-1">Chest</strong>
+                          Measure around the fullest part of the chest, under arms and across shoulder blades.
+                        </div>
+                        <div>
+                          <strong className="text-black font-bold uppercase tracking-wider block text-[10px] mb-1">Length</strong>
+                          Measure from high point of shoulder seam straight down to bottom hem.
+                        </div>
+                        <div>
+                          <strong className="text-black font-bold uppercase tracking-wider block text-[10px] mb-1">Sleeve</strong>
+                          Measure from center back of neck, across shoulder, and down to outer wrist.
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="space-y-3.5 text-xs text-neutral-600 font-light">
+                        <div>
+                          <strong className="text-black font-bold uppercase tracking-wider block text-[10px] mb-1">Waist</strong>
+                          Measure around the natural waistline, keeping the tape comfortably loose.
+                        </div>
+                        <div>
+                          <strong className="text-black font-bold uppercase tracking-wider block text-[10px] mb-1">Hip</strong>
+                          Measure around the fullest part of the seat, keeping tape level.
+                        </div>
+                        <div>
+                          <strong className="text-black font-bold uppercase tracking-wider block text-[10px] mb-1">Inseam</strong>
+                          Measure from top of inside leg down to ankle bone along seam.
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex gap-2.5 items-start text-[9px] font-semibold text-neutral-450 leading-relaxed pl-1 font-mono">
+                    <Info className="h-3.5 w-3.5 text-neutral-400 flex-shrink-0 mt-0.5" />
+                    <span>Custom grading patterns can be developed during sampling. Upload your custom spec sheet inside the quote request stage.</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
 
           {/* SECTION: RELATED PRODUCTS */}
-          {relatedProducts.length > 0 && (
-            <div className="border-t border-neutral-200 pt-16 mt-16 text-left">
-              <div className="mb-10">
-                <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-450 block mb-2 font-mono">Related Items</span>
-                <h2 className="text-2xl font-black uppercase text-black">Explore Similar Lines</h2>
-                <div className="h-0.5 w-8 bg-black mt-3" />
+          <div className="border-t border-neutral-200 pt-16 mt-16 text-left">
+            <div className="flex justify-between items-end mb-10">
+              <div>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-neutral-450 block mb-2 font-mono">
+                  Related Items
+                </span>
+                <h2 className="text-2xl font-black uppercase text-black tracking-tight">
+                  Explore Similar Lines
+                </h2>
+                <div className="h-0.5 w-12 bg-black mt-3" />
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {relatedProducts.map((p) => (
-                  <div
-                    key={p.id}
-                    onClick={() => setParams({ product: p.id })}
-                    className="bg-white border border-neutral-200 rounded-xl overflow-hidden group shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 cursor-pointer flex flex-col h-full"
+              
+              {/* Custom Navigation buttons */}
+              {relatedProducts.length > 0 && (
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => swiperRef.current?.swiper?.slidePrev()} 
+                    className="h-8 w-8 rounded-lg border border-neutral-200 hover:border-black flex items-center justify-center text-neutral-650 hover:text-black cursor-pointer bg-white transition-colors"
                   >
-                    <div className="relative aspect-[4/3] bg-neutral-100 overflow-hidden w-full">
-                      <Image
-                        src={p.image}
-                        alt={p.name}
-                        fill
-                        sizes="20vw"
-                        className="object-cover object-center group-hover:scale-103 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="p-5 flex flex-col flex-grow text-left">
-                      <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-neutral-400 block mb-1">
-                        {categoryData?.subcategories[p.subcategory]?.title}
-                      </span>
-                      <h4 className="text-xs font-black text-black uppercase tracking-wider mb-2 line-clamp-1">
-                        {p.name}
-                      </h4>
-                      <p className="text-neutral-500 text-[10px] font-light leading-relaxed line-clamp-2 mb-4">
-                        {p.description}
-                      </p>
-                      <div className="flex items-center space-x-1 text-[8px] font-black uppercase tracking-widest text-black pt-3 border-t border-neutral-100 mt-auto">
-                        <span>View Specs</span>
-                        <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform duration-200" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                    <ArrowLeft className="h-4 w-4" />
+                  </button>
+                  <button 
+                    onClick={() => swiperRef.current?.swiper?.slideNext()} 
+                    className="h-8 w-8 rounded-lg border border-neutral-200 hover:border-black flex items-center justify-center text-neutral-655 hover:text-black cursor-pointer bg-white transition-colors"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
             </div>
-          )}
+
+            {relatedProducts.length === 0 ? (
+              <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-12 text-center">
+                <p className="text-xs text-neutral-400 font-bold uppercase tracking-widest font-mono">
+                  No related products found in this category
+                </p>
+              </div>
+            ) : (
+              <div className="relative">
+                <Swiper
+                  ref={swiperRef}
+                  modules={[Autoplay, Pagination]}
+                  autoplay={{ delay: 4000, disableOnInteraction: false }}
+                  pagination={{ clickable: true, el: '.swiper-custom-pagination-related' }}
+                  breakpoints={{
+                    320: { slidesPerView: 1, spaceBetween: 16 },
+                    640: { slidesPerView: 2, spaceBetween: 20 },
+                    1024: { slidesPerView: 3, spaceBetween: 24 }
+                  }}
+                  className="w-full pb-10"
+                >
+                  {relatedProducts.map((p) => (
+                    <SwiperSlide key={p.id}>
+                      <div
+                        onClick={() => {
+                          setParams({ product: p.id });
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="bg-white border border-neutral-200 rounded-xl overflow-hidden group shadow-sm hover:shadow-lg hover:border-neutral-350 transition-all duration-500 cursor-pointer flex flex-col h-full"
+                      >
+                        <div className="relative aspect-[4/3] bg-neutral-50 overflow-hidden w-full">
+                          <Image
+                            src={p.image}
+                            alt={p.name}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 20vw"
+                            className="object-cover object-center group-hover:scale-104 transition-transform duration-700 ease-out"
+                          />
+                          <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
+                        <div className="p-6 flex flex-col flex-grow text-left">
+                          <span className="text-[7.5px] font-extrabold uppercase tracking-widest text-neutral-450 block mb-1">
+                            {categoryData?.subcategories[p.subcategory]?.title}
+                          </span>
+                          <h4 className="text-xs font-black text-black uppercase tracking-wider mb-2 leading-snug group-hover:text-neutral-600 transition-colors">
+                            {p.name}
+                          </h4>
+                          <p className="text-neutral-550 text-[10px] font-light leading-relaxed line-clamp-2 mb-6">
+                            {p.description}
+                          </p>
+                          <div className="flex items-center space-x-1 text-[8px] font-extrabold uppercase tracking-widest text-black pt-4 border-t border-neutral-100 mt-auto w-full">
+                            <span>View Specifications</span>
+                            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform duration-300 text-neutral-500 group-hover:text-black" />
+                          </div>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+
+                {/* Custom dot pagination container */}
+                <div className="swiper-custom-pagination-related flex justify-center gap-1.5 mt-2" />
+              </div>
+            )}
+          </div>
 
         </div>
       </div>

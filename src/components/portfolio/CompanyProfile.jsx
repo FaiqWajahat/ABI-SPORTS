@@ -51,11 +51,11 @@ export default function CompanyProfile() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent" />
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-black" />
                 <div className="absolute top-4 left-4 bg-white text-black text-[9px] font-extrabold tracking-wider uppercase px-3 py-1.5 rounded-full shadow-sm">
-                  Est. 2004 · Sialkot
+                  Est. 2011 · Sialkot
                 </div>
                 <div className="absolute bottom-5 left-5">
                   <p className="text-[9px] font-bold uppercase tracking-wider text-neutral-400">Main Assembly Floor</p>
-                  <p className="text-sm font-black text-white uppercase tracking-wider mt-0.5">ABI Sports Factory</p>
+                  <p className="text-sm font-black text-white uppercase tracking-wider mt-0.5">Al Badar Impex Factory</p>
                 </div>
               </motion.div>
 
@@ -84,25 +84,25 @@ export default function CompanyProfile() {
                   </span>
                 </AnimatedSection>
                 <AnimatedSection direction="up" delay={0.1}>
-                  <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-black uppercase leading-tight">
-                    ABI SPORTS —<br />WHO WE ARE
-                  </h2>
-                </AnimatedSection>
-                <AnimatedSection direction="up" delay={0.14}>
-                  <div className="h-0.5 w-12 bg-black mt-4" />
-                </AnimatedSection>
-              </div>
-
-              <AnimatedSection direction="up" delay={0.18}>
-                <p className="text-neutral-600 text-sm font-light leading-relaxed">
-                  ABI Sports is a vertically integrated sportswear manufacturer based in Sialkot, Pakistan — the world's foremost hub for performance apparel production. Founded in 2004, we have grown from a specialist stitching unit into a full-service manufacturing partner serving professional sports clubs, private-label brands, and global retailers across 60+ countries.
-                </p>
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-black uppercase leading-tight">
+                  AL BADAR IMPEX —<br />WHO WE ARE
+                </h2>
               </AnimatedSection>
+              <AnimatedSection direction="up" delay={0.14}>
+                <div className="h-0.5 w-12 bg-black mt-4" />
+              </AnimatedSection>
+            </div>
 
-              <AnimatedSection direction="up" delay={0.22}>
-                <p className="text-neutral-500 text-sm font-light leading-relaxed">
-                  Every process — from raw fabric sourcing and CAD pattern cutting through dye sublimation, flatlock stitching, Tajima embroidery, and export packaging — is handled entirely in-house. This vertical integration lets us guarantee consistent quality, fast turnarounds, and competitive pricing at any volume.
-                </p>
+            <AnimatedSection direction="up" delay={0.18}>
+              <p className="text-neutral-600 text-sm font-light leading-relaxed">
+                Al Badar Impex is a leading custom apparel manufacturer specializing in premium-quality Activewear, Swimwear, Teamwear, and Streetwear. We provide end-to-end manufacturing solutions, from design and fabric sourcing to printing, embroidery, and worldwide delivery.
+              </p>
+            </AnimatedSection>
+
+            <AnimatedSection direction="up" delay={0.22}>
+              <p className="text-neutral-500 text-sm font-light leading-relaxed">
+                Founded in 2011 by experienced professionals in the textile industry, Al Badar Impex started as a small manufacturing operation focused on delivering reliable apparel solutions. Today, we manufacture premium apparel for brands around the globe while maintaining the same commitment to quality and integrity.
+              </p>
               </AnimatedSection>
 
               {/* Certifications */}

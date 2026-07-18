@@ -12,7 +12,7 @@ const COMPATIBILITIES = [
     title: "Tech Packs & 3D Design",
     description: "Send us your tech packs in PDF, Excel, or Adobe Illustrator (.AI) formats. We are fully compatible with CLO3D, Browzwear files, and CAD pattern software to build exact fitting samples.",
     specs: ["Adobe Illustrator (.AI)", "CLO3D / CAD Patterns", "Tech Pack PDFs", "Size Spec Sheets"],
-    placeholderImage: "/active-wear.png"
+    placeholderImage: "/compatibility-tech-pack.png"
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const COMPATIBILITIES = [
     title: "Customization & Prints",
     description: "Support for advanced B2B decoration protocols including high-density screen printing, Tajima embroidery, silicone 3D prints, reflective heat transfers, and high-resolution sublimation.",
     specs: ["Tajima Embroidery", "Dye-Sublimation", "High-Density Prints", "Silicone Heat Transfer"],
-    placeholderImage: "/team-wear.png"
+    placeholderImage: "/compatibility-customization.png"
   },
   {
     id: 3,
@@ -28,7 +28,7 @@ const COMPATIBILITIES = [
     title: "Sizing & Fit Grading",
     description: "Compatible with international standard charts (US, EU, Asian markets). We offer custom fit grading across sportswear product categories from youth sizes up to athletic plus-sizing.",
     specs: ["US & EU Standard Fit", "Custom Size Charts", "In-House Fit Grading", "Youth to Plus Sizes"],
-    placeholderImage: "/active-wear.png"
+    placeholderImage: "/compatibility-sizing.png"
   },
   {
     id: 4,
@@ -36,7 +36,7 @@ const COMPATIBILITIES = [
     title: "Logistics & Integrations",
     description: "Fully compliant with retail logistics requirements. We support GS1 barcoding, Amazon FBA packaging, custom tags/inserts, poly-bag labeling, and direct-to-warehouse global distribution.",
     specs: ["GS1 Barcoding", "Amazon FBA Compliant", "Shopify Warehouses", "Custom Trims & Labeling"],
-    placeholderImage: "/team-wear.png"
+    placeholderImage: "/compatibility-logistics.png"
   }
 ];
 

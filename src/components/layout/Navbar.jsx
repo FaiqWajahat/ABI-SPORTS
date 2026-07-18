@@ -209,6 +209,9 @@ const Navbar = () => {
               <Link href="/production" className={`text-[13px] font-medium transition-colors ${isActive('/production') ? 'text-white font-semibold' : 'text-neutral-400 hover:text-white'}`}>
                 Production
               </Link>
+              <Link href="/services" className={`text-[13px] font-medium transition-colors ${isActive('/services') ? 'text-white font-semibold' : 'text-neutral-400 hover:text-white'}`}>
+                Services
+              </Link>
               <Link href="/portfolio" className={`text-[13px] font-medium transition-colors ${isActive('/portfolio') ? 'text-white font-semibold' : 'text-neutral-400 hover:text-white'}`}>
                 Portfolio
               </Link>
@@ -243,7 +246,7 @@ const Navbar = () => {
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-black text-white border-neutral-900 w-[290px] rounded-none p-6 overflow-y-auto">
                   <SheetTitle className="text-white font-black tracking-widest border-b border-neutral-900 pb-4 text-left uppercase text-lg">
-                    ABI SPORTS
+                    AL BADAR IMPEX
                   </SheetTitle>
                   <div className="flex flex-col space-y-5 mt-6">
                     <Link
@@ -369,6 +372,13 @@ const Navbar = () => {
                         className={`text-base font-bold text-left transition-colors py-1 ${isActive('/production') ? 'text-white' : 'text-neutral-300 hover:text-white'}`}
                       >
                         Production
+                      </Link>
+                      <Link
+                        href="/services"
+                        onClick={() => setIsOpen(false)}
+                        className={`text-base font-bold text-left transition-colors py-1 ${isActive('/services') ? 'text-white' : 'text-neutral-300 hover:text-white'}`}
+                      >
+                        Services
                       </Link>
                       <Link
                         href="/portfolio"

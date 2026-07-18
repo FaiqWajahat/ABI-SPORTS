@@ -65,7 +65,7 @@ export default function PortfolioHero() {
               {/* Tall left card */}
               <StaggerItem className="col-span-7 relative h-full rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm hover:-translate-y-1.5 hover:shadow-md transition-all duration-500 min-h-[320px]">
                 <Image
-                  src="/active-wear.png"
+                  src="/global-brands-values.png"
                   alt="ABI Sports custom sportswear portfolio"
                   fill
                   sizes="(max-width: 768px) 100vw, 25vw"
@@ -74,7 +74,7 @@ export default function PortfolioHero() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
                 <div className="absolute top-4 left-4 bg-white text-black text-[9px] font-extrabold tracking-wider uppercase px-3 py-1.5 rounded-full shadow-sm">
-                  Est. 2004
+                  Est. 2011
                 </div>
                 <div className="absolute bottom-6 left-6">
                   <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider">Portfolio</p>
@@ -87,7 +87,7 @@ export default function PortfolioHero() {
 
                 <StaggerItem className="relative flex-1 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[148px] hover:-translate-y-1 hover:shadow-md transition-all duration-500">
                   <Image
-                    src="/team-wear.png"
+                    src="/active.jpg"
                     alt="Custom sublimated sportswear"
                     fill
                     sizes="15vw"
@@ -101,7 +101,7 @@ export default function PortfolioHero() {
 
                 <StaggerItem className="relative flex-1 rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[148px] hover:-translate-y-1 hover:shadow-md transition-all duration-500">
                   <Image
-                    src="/hero.png"
+                    src="/team.jpg"
                     alt="Custom outerwear and training wear"
                     fill
                     sizes="15vw"

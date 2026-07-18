@@ -8,9 +8,9 @@ import TestimonialsStrip  from '@/components/portfolio/TestimonialsStrip';
 import PortfolioCTA       from '@/components/portfolio/PortfolioCTA';
 
 export const metadata = {
-  title: 'Portfolio | ABI SPORTS — Sportswear Manufacturers',
+  title: 'Portfolio | Al Badar Impex — Custom Sportswear Manufacturers',
   description:
-    "Browse ABI Sports' portfolio of custom sportswear collections — team kits, performance activewear, sublimated uniforms, and private-label programs manufactured in Sialkot, Pakistan.",
+    "Browse Al Badar Impex's portfolio of custom sportswear collections — team kits, performance activewear, sublimated uniforms, and private-label programs.",
 };
 
 export default function PortfolioPage() {

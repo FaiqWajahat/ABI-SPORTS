@@ -111,7 +111,7 @@ export default function Hero() {
               {/* 1. Tall Left Card (NHL hockey shoe close-up) */}
               <StaggerItem className="col-span-7 relative h-full rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm hover:-translate-y-1.5 hover:shadow-md hover:border-neutral-350 transition-all duration-500 min-h-[368px]">
                 <Image
-                  src="/active-wear.png"
+                  src="/hero-01.png"
                   alt="Fully Custom apparel details close-up"
                   fill
                   sizes="(max-w-768px) 100vw, 25vw"
@@ -137,7 +137,7 @@ export default function Hero() {
                 {/* 2. Embroidery Card */}
                 <StaggerItem className="relative flex-1 aspect-square sm:aspect-auto rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[112px] hover:-translate-y-1 hover:shadow-md hover:border-neutral-350 transition-all duration-500">
                   <Image
-                    src="/active-wear.png"
+                    src="/hero-02.png"
                     alt="Embroidery machinery close-up"
                     fill
                     sizes="(max-w-768px) 100vw, 15vw"
@@ -152,7 +152,7 @@ export default function Hero() {
                 {/* 3. Screen Printing Card */}
                 <StaggerItem className="relative flex-1 aspect-square sm:aspect-auto rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[112px] hover:-translate-y-1 hover:shadow-md hover:border-neutral-350 transition-all duration-500">
                   <Image
-                    src="/team-wear.png"
+                    src="/hero-03.png"
                     alt="Screen Printing apparel machine"
                     fill
                     sizes="(max-w-768px) 100vw, 15vw"
@@ -167,7 +167,7 @@ export default function Hero() {
                 {/* 4. High Quality Equipment Card */}
                 <StaggerItem className="relative flex-1 aspect-square sm:aspect-auto rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm min-h-[112px] hover:-translate-y-1 hover:shadow-md hover:border-neutral-350 transition-all duration-500">
                   <Image
-                    src="/active-wear.png"
+                    src="/hero-04.png"
                     alt="Precision sewing machines"
                     fill
                     sizes="(max-w-768px) 100vw, 15vw"
@@ -184,7 +184,7 @@ export default function Hero() {
               {/* 5. Custom Labels Horizontal bottom card */}
               <StaggerItem className="col-span-12 relative aspect-[4.2/1] rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm hover:-translate-y-1 hover:shadow-md hover:border-neutral-350 transition-all duration-500">
                 <Image
-                  src="/team-wear.png"
+                  src="/hero-05.png"
                   alt="Custom woven clothing tags"
                   fill
                   sizes="(max-w-768px) 100vw, 40vw"

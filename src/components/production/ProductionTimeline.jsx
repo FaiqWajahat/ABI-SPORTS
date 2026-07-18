@@ -13,7 +13,7 @@ const STEPS = [
     label: 'Tech Pack Review',
     day: 'Day 1',
     time: '4–6 hrs',
-    image: '/active-wear.png',
+    image: '/step-01.png',
     description:
       'Spec sheets, vector artwork, and size grading are checked for production compatibility before any material is cut.',
     specs: ['Vector outline scaling', 'Colour code verification', 'Grading chart review'],
@@ -23,7 +23,7 @@ const STEPS = [
     label: 'Fabric Sourcing',
     day: 'Day 1–3',
     time: '2–3 days',
-    image: '/team-wear.png',
+    image: '/step-02.png',
     description:
       'Performance yarns are sourced and lab-tested for weight, shrinkage, and colour fastness before cutting begins.',
     specs: ['GSM density check', 'Shrinkage tolerance test', 'Dye lot matching'],
@@ -33,7 +33,7 @@ const STEPS = [
     label: 'CAD Cutting',
     day: 'Day 4',
     time: '6–8 hrs',
-    image: '/active-wear.png',
+    image: '/step-03.png',
     description:
       'Digitised grading files are laser-cut across every ply, holding pattern variance to zero.',
     specs: ['Laser cutter mapping', 'Layer stack balancing', 'Panel tag labelling'],
@@ -43,7 +43,7 @@ const STEPS = [
     label: 'Sublimation',
     day: 'Day 4–5',
     time: '1–2 days',
-    image: '/team-wear.png',
+    image: '/step-04.png',
     description:
       'Graphics are heat-pressed into the polyester fibre at 200°C, locking colour in permanently.',
     specs: ['Sublimation ink validation', 'Lightbox shade match', 'Bleed boundary control'],
@@ -53,7 +53,7 @@ const STEPS = [
     label: 'Stitching',
     day: 'Day 5–8',
     time: '3–4 days',
-    image: '/active-wear.png',
+    image: '/step-05.png',
     description:
       '4-needle, 6-thread flatlock seams join every panel to a zero-ridge finish built for competition.',
     specs: ['12–14 SPI target', 'Stretch load testing', 'Thread trim inspection'],
@@ -63,7 +63,7 @@ const STEPS = [
     label: 'QA & Packing',
     day: 'Day 9–10',
     time: '1–2 days',
-    image: '/team-wear.png',
+    image: '/step-06.png',
     description:
       'Every garment is metal-detected, barcoded, and sealed in anti-humidity packaging for export.',
     specs: ['100% metal detection', 'Barcode SKU mapping', 'Export weight audit'],

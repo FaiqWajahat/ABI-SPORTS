@@ -14,7 +14,7 @@ const PROCESS_STEPS = [
     phase: "Design",
     title: "Design & Tech Packs",
     description: "Blueprint CAD patterns, CLO3D 3D simulations, fit validation models and full size spec sheets.",
-    image: "/active-wear.png"
+    image: "/process-01.png"
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const PROCESS_STEPS = [
     phase: "Sourcing",
     title: "Fabric Sourcing & Validation",
     description: "High-performance athletic yarns, GSM density validation, shrinkage controls, custom dye lab tests.",
-    image: "/team-wear.png"
+    image: "/process-02.png"
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const PROCESS_STEPS = [
     phase: "Cutting",
     title: "Precision Panel Cutting",
     description: "Computerized laser-cutting tables, automatic pattern laying and zero-variance dimension control.",
-    image: "/active-wear.png"
+    image: "/process-03.png"
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ const PROCESS_STEPS = [
     phase: "Print",
     title: "Embellishment & Printing",
     description: "Sublimation pressing, Tajima embroidery, silicone 3D heat transfers and screen printing options.",
-    image: "/team-wear.png"
+    image: "/process-04.png"
   },
   {
     id: 5,
@@ -46,7 +46,7 @@ const PROCESS_STEPS = [
     phase: "Assembly",
     title: "Stitching & Assembly",
     description: "Flatlock seam systems, reinforced twin-needle joins, and specialty sportswear thread alignment.",
-    image: "/active-wear.png"
+    image: "/process-05.png"
   },
   {
     id: 6,
@@ -54,7 +54,7 @@ const PROCESS_STEPS = [
     phase: "Quality",
     title: "Quality Control & Ship",
     description: "100% manual inspections, seam tensile pull-testing, branding attachments, compliant packaging.",
-    image: "/team-wear.png"
+    image: "/process-06.png"
   }
 ];
 

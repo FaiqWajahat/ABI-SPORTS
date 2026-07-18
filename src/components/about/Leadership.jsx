@@ -11,7 +11,7 @@ const MEMBERS = [
     id: 0,
     name: "Muhammad Tariq",
     role: "Chief Executive Officer",
-    bio: "Over 35 years of experience in textile management. Led the transition of ABI Sports to a vertically integrated plant, establishing our global export infrastructure.",
+    bio: "Over 35 years of experience in textile management. Led the transition of Al Badar Impex to a vertically integrated plant, establishing our global export infrastructure.",
     email: "tariq@abisportswear.com",
     department: "Executive Board",
     image: "/active-wear.png"

@@ -2,9 +2,9 @@ import React, { Suspense } from 'react';
 import ProductsClient from '@/components/products/ProductsClient';
 
 export const metadata = {
-  title: 'Products | ABI SPORTS — B2B Sportswear Manufacturer',
+  title: 'Products | Al Badar Impex — Custom Apparel Manufacturer',
   description:
-    'Explore ABI Sports Sialkot\'s full catalog of custom activewear, team sportswear, and technical athletic gear. Request custom samples and bulk B2B quotes.',
+    "Explore Al Badar Impex's catalog of custom activewear, swimwear, teamwear, and streetwear. Request custom samples and bulk B2B quotes.",
 };
 
 export default function ProductsPage() {

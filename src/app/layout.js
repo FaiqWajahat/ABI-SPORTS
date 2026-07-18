@@ -8,8 +8,8 @@ const poppins = Poppins({
 });
 
 export const metadata = {
-  title: "ABI Sports | Premium B2B Sports Wear & Team Wear Manufacturer",
-  description: "Certified garment manufacturing factory direct. We produce high-quality custom hoodies, tracksuits, athletic tees, and sublimated team uniforms. Low MOQs starting at 50 pcs.",
+  title: "Al Badar Impex | Premium Custom Sportswear & Apparel Manufacturer",
+  description: "Al Badar Impex is a leading custom apparel manufacturer specializing in premium Activewear, Swimwear, Teamwear, and Streetwear. Low MOQs starting at 50 pcs.",
   keywords: "sportswear manufacturer, B2B athletic apparel, teamwear jersey factory, custom hoodies production, clothing supplier, textile manufacturing",
 };
 
@@ -19,6 +19,7 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${poppins.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-black text-white selection:bg-neutral-850 selection:text-white font-sans">
         {children}

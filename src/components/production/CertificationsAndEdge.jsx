@@ -75,7 +75,7 @@ export default function CertificationsAndEdge() {
           </div>
           <AnimatedSection direction="up" delay={0.18}>
             <p className="text-neutral-500 text-sm font-light leading-relaxed max-w-md">
-              Every production facility at ABI Sports holds internationally recognised certifications across social compliance, chemical safety, organic processing, and quality management.
+              Every production facility at Al Badar Impex holds internationally recognised certifications across social compliance, chemical safety, organic processing, and quality management.
             </p>
           </AnimatedSection>
         </div>
@@ -90,14 +90,14 @@ export default function CertificationsAndEdge() {
         {/* Divider */}
         <div className="max-w-6xl mx-auto border-t border-neutral-200 mb-24" />
 
-        {/* Why ABI Sports advantages */}
+        {/* Why Al Badar Impex advantages */}
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <AnimatedSection direction="up" delay={0.05}>
               <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 block mb-3">Competitive Advantages</span>
             </AnimatedSection>
             <AnimatedSection direction="up" delay={0.1}>
-              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-black uppercase">WHY ABI SPORTS?</h2>
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-black uppercase">WHY AL BADAR IMPEX?</h2>
             </AnimatedSection>
             <AnimatedSection direction="up" delay={0.14}>
               <div className="h-0.5 w-12 bg-black mx-auto mt-5" />

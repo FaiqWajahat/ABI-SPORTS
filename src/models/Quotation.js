@@ -30,8 +30,8 @@ const QuotationSchema = new mongoose.Schema(
     },
     companyName: {
       type: String,
-      required: [true, 'Please provide your company name'],
       trim: true,
+      default: '',
     },
     email: {
       type: String,
@@ -41,8 +41,8 @@ const QuotationSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, 'Please provide your phone number'],
       trim: true,
+      default: '',
     },
     message: {
       type: String,
@@ -62,4 +62,8 @@ const QuotationSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.Quotation || mongoose.model('Quotation', QuotationSchema);
+if (mongoose.models && mongoose.models.Quotation) {
+  delete mongoose.models.Quotation;
+}
+
+export default mongoose.model('Quotation', QuotationSchema);

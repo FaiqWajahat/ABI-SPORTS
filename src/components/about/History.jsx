@@ -7,31 +7,31 @@ import { AnimatedSection } from '@/components/ui/animations';
 
 const TIMELINE_EVENTS = [
   {
-    year: "1984",
+    year: "2011",
     tagline: "The Foundation",
-    title: "Sialkot Stitching Workshop",
-    description: "Established as a specialized athletic garments tailoring unit with 15 flatlock sewing machines, serving regional sports leagues.",
+    title: "Small Scale Stitching Setup",
+    description: "Al Badar Impex started as a small apparel manufacturing operation in Sialkot, Pakistan, focused on delivering high-quality, reliable sportswear and activewear solutions.",
     icon: Flag
   },
   {
-    year: "1998",
-    tagline: "The Mill",
-    title: "Vertical Weaving Expansion",
-    description: "Commissioned our first automated fabric milling and dyeing loops, gaining full control over thread selection and fabric shrinkage parameters.",
+    year: "2015",
+    tagline: "Product Expansion",
+    title: "Broadening the Apparel Lines",
+    description: "Expanded our production capabilities to manufacture Swimwear, Teamwear, and custom activewear lines, securing our first direct international buyers.",
     icon: Flame
   },
   {
-    year: "2008",
+    year: "2019",
     tagline: "Tech Integration",
-    title: "Sublimation & Embellishment Hub",
-    description: "Expanded our production capabilities with roll-to-roll dye sublimation machinery and automated Tajima embroidery heads.",
+    title: "Modern Embellishment Hub",
+    description: "Integrated automated Tajima embroidery machines and premium dye sublimation technology to offer high-speed, edge-to-edge printing in-house.",
     icon: Award
   },
   {
-    year: "2018",
-    tagline: "Global Distribution",
-    title: "International Sales Desks",
-    description: "Opened logistics hubs and corporate offices in USA and Canada to facilitate direct air cargo shipments and custom warehousing.",
+    year: "2024",
+    tagline: "Global Sourcing",
+    title: "End-to-End Private Labeling",
+    description: "Serving leading global activewear and streetwear brands with custom tagging, barcode mapping, and streamlined door-to-door worldwide shipping.",
     icon: Target
   }
 ];
