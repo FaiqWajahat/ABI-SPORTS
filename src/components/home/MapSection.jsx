@@ -213,17 +213,23 @@ export default function MapSection() {
               {/* Map Continent Geographies */}
               <Geographies geography="/world-countries.json">
                 {({ geographies }) =>
-                  geographies.map((geo) => (
-                    <Geography
-                      key={geo.rsmKey}
-                      geography={geo}
-                      style={{
-                        default: { fill: "#ffffff", stroke: "#000000", strokeWidth: 0.15, outline: "none" },
-                        hover: { fill: "#f5f5f7", stroke: "#000000", strokeWidth: 0.15, outline: "none" },
-                        pressed: { fill: "#e5e5e5", stroke: "#000000", strokeWidth: 0.15, outline: "none" }
-                      }}
-                    />
-                  ))
+                  geographies
+                    .filter((geo) => {
+                      const name = geo.properties?.name || '';
+                      const code = geo.properties?.ISO_A3 || geo.properties?.iso_a3 || geo.id || '';
+                      return name !== 'Antarctica' && code !== 'ATA';
+                    })
+                    .map((geo) => (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        style={{
+                          default: { fill: "#ffffff", stroke: "#000000", strokeWidth: 0.15, outline: "none" },
+                          hover: { fill: "#f5f5f7", stroke: "#000000", strokeWidth: 0.15, outline: "none" },
+                          pressed: { fill: "#e5e5e5", stroke: "#000000", strokeWidth: 0.15, outline: "none" }
+                        }}
+                      />
+                    ))
                 }
               </Geographies>
 
