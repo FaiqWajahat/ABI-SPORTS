@@ -184,7 +184,7 @@ export default function Hero() {
               {/* 5. Custom Labels Horizontal bottom card */}
               <StaggerItem className="col-span-12 relative aspect-[4.2/1] rounded-lg overflow-hidden border border-neutral-200 bg-neutral-100 group shadow-sm hover:-translate-y-1 hover:shadow-md hover:border-neutral-350 transition-all duration-500">
                 <Image
-                  src="/hero-05.png"
+                  src="/hero-006.png"
                   alt="Custom woven clothing tags"
                   fill
                   sizes="(max-w-768px) 100vw, 40vw"
