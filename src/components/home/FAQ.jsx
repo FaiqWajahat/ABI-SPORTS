@@ -154,11 +154,16 @@ export default function FAQ() {
                       <ArrowRight className="h-3.5 w-3.5" />
                     </button>
                   </Link>
-                  <Link href="/contact" className="w-full">
+                  <a 
+                    href="https://wa.me/923484488019?text=Hello%20Al%20Badar%20Impex%2C%20I%20would%20like%20to%20inquire%20about%20custom%20sportswear%20manufacturing." 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="w-full"
+                  >
                     <button className="w-full inline-flex items-center justify-center text-[10px] font-extrabold uppercase tracking-widest text-black bg-neutral-50 hover:bg-neutral-100 rounded-lg py-3.5 transition-all duration-300 gap-2 cursor-pointer border border-neutral-200/50 shadow-none">
                       <span>Contact Sales Desk</span>
                     </button>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </AnimatedSection>

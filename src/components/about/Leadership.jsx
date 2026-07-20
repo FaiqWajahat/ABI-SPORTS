@@ -9,39 +9,39 @@ import { AnimatedSection } from '@/components/ui/animations';
 const MEMBERS = [
   {
     id: 0,
-    name: "Muhammad Tariq",
+    name: "Badar Jamil",
     role: "Chief Executive Officer",
-    bio: "Over 35 years of experience in textile management. Led the transition of Al Badar Impex to a vertically integrated plant, establishing our global export infrastructure.",
-    email: "tariq@abisportswear.com",
-    department: "Executive Board",
-    image: "/active-wear.png"
+    bio: "Spearheads the strategic vision and overall vertical manufacturing operations of Al Badar Impex, driving international export expansion and operational excellence.",
+    email: "jamil.badar@abisportswear.com",
+    department: "Executive Leadership",
+    image: "/sialkot-factory.png"
   },
   {
     id: 1,
-    name: "Faisal Tariq",
+    name: "Mudassar Butt",
     role: "Managing Director",
-    bio: "Manages global corporate accounts and logistics partnerships across North America and European distribution hubs, ensuring seamless custom clearances.",
-    email: "faisal@abisportswear.com",
-    department: "Global Sales",
-    image: "/team-wear.png"
+    bio: "Manages corporate relations, global account partnerships, and international business expansion across North American and European sportswear markets.",
+    email: "mudassar@abisportswear.com",
+    department: "Corporate Management",
+    image: "/usa-office.png"
   },
   {
     id: 2,
-    name: "Zahid Ahmed",
+    name: "Sheryar Butt",
     role: "Production & Stitching Head",
-    bio: "Controls operational flow across sewing floors. Expert in flatlock construction patterns, line balancing, and automated CAD pattern cutters.",
-    email: "zahid@abisportswear.com",
-    department: "Operations Plant",
-    image: "/active-wear.png"
+    bio: "Controls manufacturing workflow across our Sialkot stitching halls, overseeing CAD precision cutting, line balancing, flatlock construction, and daily production output.",
+    email: "sheryar@abisportswear.com",
+    department: "Production Plant",
+    image: "/sialkot-factory.png"
   },
   {
     id: 3,
-    name: "Khurram Shahzad",
-    role: "Director of Quality Control",
-    bio: "Spearheads quality checklists and ISO standards. Manages annual Smeta and WRAP ethical factory inspection logs.",
-    email: "khurram@abisportswear.com",
-    department: "Compliance Desk",
-    image: "/team-wear.png"
+    name: "Zunaira Ijaz",
+    role: "Marketing Director",
+    bio: "Directs global brand outreach, client communication channels, digital marketing campaigns, and B2B client relation strategies worldwide.",
+    email: "zunaira@abisportswear.com",
+    department: "Marketing & Relations",
+    image: "/canada-office.png"
   }
 ];
 

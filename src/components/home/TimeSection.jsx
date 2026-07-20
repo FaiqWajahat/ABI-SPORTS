@@ -1,42 +1,66 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Clock, Globe2, Landmark, Building2, MapPin } from 'lucide-react';
-import { AnimatedSection } from '@/components/ui/animations';
+import { Clock, Globe2, MapPin, Building2, ShieldCheck, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/ui/animations';
 
 const LOCATIONS = [
   {
     id: 'sialkot',
-    name: "Sialkot Factory",
-    subtitle: "Manufacturing Headquarters",
-    timeZone: "Asia/Karachi",
-    tzLabel: "PKT (UTC+5)",
-    hours: "09:00 AM - 06:00 PM",
+    name: 'Sialkot Factory',
+    country: 'Pakistan',
+    flag: '🇵🇰',
+    subtitle: 'Manufacturing Headquarters',
+    timeZone: 'Asia/Karachi',
+    tzLabel: 'PKT (UTC+5)',
+    hours: '09:00 AM - 06:00 PM',
     openHour: 9,
     closeHour: 18,
-    type: "Production Hub"
+    type: 'Production Hub',
+    tagline: 'Primary Fabric Milling & Tailoring'
+  },
+  {
+    id: 'uk',
+    name: 'UK Office',
+    country: 'United Kingdom',
+    flag: '🇬🇧',
+    subtitle: 'UK Operations Division',
+    timeZone: 'Europe/London',
+    tzLabel: 'GMT/BST (UTC+0/UTC+1)',
+    hours: '09:00 AM - 05:00 PM',
+    openHour: 9,
+    closeHour: 17,
+    type: 'UK Client Desk',
+    tagline: 'Oldham Representative Support'
   },
   {
     id: 'usa',
-    name: "USA Office",
-    subtitle: "New York Corporate Office",
-    timeZone: "America/New_York",
-    tzLabel: "EST/EDT (UTC-5/UTC-4)",
-    hours: "09:00 AM - 05:00 PM",
+    name: 'USA Office',
+    country: 'United States',
+    flag: '🇺🇸',
+    subtitle: 'New York Corporate Office',
+    timeZone: 'America/New_York',
+    tzLabel: 'EST/EDT (UTC-5/UTC-4)',
+    hours: '09:00 AM - 05:00 PM',
     openHour: 9,
     closeHour: 17,
-    type: "Corporate Sales"
+    type: 'Corporate Sales',
+    tagline: 'Lindenhurst Fulfillment Center'
   },
   {
     id: 'canada',
-    name: "Canada Office",
-    subtitle: "Toronto Sales Division",
-    timeZone: "America/Toronto",
-    tzLabel: "EST/EDT (UTC-5/UTC-4)",
-    hours: "09:00 AM - 05:00 PM",
+    name: 'Canada Office',
+    country: 'Canada',
+    flag: '🇨🇦',
+    subtitle: 'Toronto Sales Division',
+    timeZone: 'America/Toronto',
+    tzLabel: 'EST/EDT (UTC-5/UTC-4)',
+    hours: '09:00 AM - 05:00 PM',
     openHour: 9,
     closeHour: 17,
-    type: "Distribution Desk"
+    type: 'Distribution Desk',
+    tagline: 'Edmonton & Toronto Showroom'
   }
 ];
 
@@ -82,65 +106,76 @@ function AnalogClock({ timeZone }) {
   }, [timeZone]);
 
   return (
-    <div className="relative h-24 w-24 rounded-full border border-neutral-100 bg-white flex items-center justify-center flex-shrink-0 shadow-sm transition-transform duration-500 group-hover:scale-105">
-      {/* Center point */}
-      <div className="h-2 w-2 rounded-full bg-black z-30 shadow-sm"></div>
-      
+    <div className="relative h-28 w-28 rounded-full border border-neutral-200/80 bg-gradient-to-b from-white to-neutral-50 flex items-center justify-center flex-shrink-0 shadow-md transition-transform duration-500 group-hover:scale-105">
+      {/* Outer Dial Ring */}
+      <div className="absolute inset-1 rounded-full border border-neutral-100/80" />
+
+      {/* Hour Ticks (12, 3, 6, 9) */}
+      <div className="absolute top-2.5 w-0.5 h-2 bg-neutral-900 rounded-full" />
+      <div className="absolute bottom-2.5 w-0.5 h-2 bg-neutral-900 rounded-full" />
+      <div className="absolute left-2.5 h-0.5 w-2 bg-neutral-900 rounded-full" />
+      <div className="absolute right-2.5 h-0.5 w-2 bg-neutral-900 rounded-full" />
+
+      {/* Center Cap */}
+      <div className="h-3 w-3 rounded-full bg-black z-30 shadow-md border-2 border-white" />
+
       {/* Hour Hand */}
-      <div 
-        className="absolute w-0.75 h-7 bg-black origin-bottom rounded-full z-10"
-        style={{ 
-          transform: `rotate(${rotation.hr}deg)`, 
+      <div
+        className="absolute w-1 h-8 bg-black origin-bottom rounded-full z-10 shadow-xs"
+        style={{
+          transform: `rotate(${rotation.hr}deg)`,
           bottom: '50%',
           transformOrigin: '50% 100%'
         }}
-      ></div>
+      />
 
       {/* Minute Hand */}
-      <div 
-        className="absolute w-[1.5px] h-10 bg-neutral-600 origin-bottom rounded-full z-20"
-        style={{ 
-          transform: `rotate(${rotation.min}deg)`, 
+      <div
+        className="absolute w-0.75 h-11 bg-neutral-700 origin-bottom rounded-full z-20"
+        style={{
+          transform: `rotate(${rotation.min}deg)`,
           bottom: '50%',
           transformOrigin: '50% 100%'
         }}
-      ></div>
+      />
 
       {/* Second Hand */}
-      <div 
-        className="absolute w-[0.75px] h-11 bg-red-500 origin-bottom rounded-full z-20"
-        style={{ 
-          transform: `rotate(${rotation.sec}deg)`, 
+      <div
+        className="absolute w-[1px] h-12 bg-red-500 origin-bottom rounded-full z-20"
+        style={{
+          transform: `rotate(${rotation.sec}deg)`,
           bottom: '50%',
           transformOrigin: '50% 100%'
         }}
-      ></div>
-
-      {/* Dial Hour markers */}
-      <div className="absolute top-1.5 w-0.5 h-1.5 bg-neutral-300"></div>
-      <div className="absolute bottom-1.5 w-0.5 h-1.5 bg-neutral-300"></div>
-      <div className="absolute left-1.5 h-0.5 w-1.5 bg-neutral-300"></div>
-      <div className="absolute right-1.5 h-0.5 w-1.5 bg-neutral-300"></div>
+      />
     </div>
   );
 }
 
 function TimeDisplay({ location }) {
-  const [timeStr, setTimeStr] = useState("");
+  const [timeStr, setTimeStr] = useState('');
+  const [dateStr, setDateStr] = useState('');
   const [isOpenNow, setIsOpenNow] = useState(false);
 
   useEffect(() => {
     const updateTime = () => {
       try {
         const now = new Date();
-        const formatted = now.toLocaleTimeString('en-US', {
+        const formattedTime = now.toLocaleTimeString('en-US', {
           timeZone: location.timeZone,
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
           hour12: true
         });
-        setTimeStr(formatted);
+        const formattedDate = now.toLocaleDateString('en-US', {
+          timeZone: location.timeZone,
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric'
+        });
+        setTimeStr(formattedTime);
+        setDateStr(formattedDate);
 
         const partsFormatter = new Intl.DateTimeFormat('en-US', {
           timeZone: location.timeZone,
@@ -151,6 +186,7 @@ function TimeDisplay({ location }) {
         setIsOpenNow(hour >= location.openHour && hour < location.closeHour);
       } catch (err) {
         setTimeStr(new Date().toLocaleTimeString());
+        setDateStr('');
       }
     };
 
@@ -160,59 +196,103 @@ function TimeDisplay({ location }) {
   }, [location]);
 
   return (
-    <div className="bg-[#fcfcfc] rounded-lg p-6 sm:p-8 flex flex-col items-center text-center shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-500 border border-neutral-100/60 relative overflow-hidden group">
-      
-      {/* Decorative vertical stripe */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-neutral-200 group-hover:bg-black transition-colors duration-500" />
-      
-      <div className="w-full flex justify-between items-center mb-6">
-        <span className="text-[8px] font-black uppercase tracking-widest text-neutral-400 bg-neutral-100/80 px-2.5 py-1 rounded">
-          {location.type}
-        </span>
-        <span className={`inline-flex items-center gap-1 text-[8px] font-bold uppercase tracking-widest px-2 py-0.5 rounded ${
-          isOpenNow 
-            ? 'text-green-600 bg-green-50/80 border border-green-200/30' 
-            : 'text-neutral-500 bg-neutral-100/85 border border-neutral-200/20'
-        }`}>
-          <span className={`h-1 w-1 rounded-full ${isOpenNow ? 'bg-green-500 animate-pulse' : 'bg-neutral-450'}`}></span>
-          {isOpenNow ? "Open" : "Closed"}
-        </span>
-      </div>
+    <div className="bg-white rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-400 border border-neutral-200/90 relative overflow-hidden group">
+      {/* Top Accent Gradient Line */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-neutral-200 via-neutral-900 to-neutral-200 group-hover:from-black group-hover:via-neutral-800 group-hover:to-black transition-all duration-500" />
 
-      {/* Clock display */}
-      <div className="mb-6">
-        <AnalogClock timeZone={location.timeZone} />
-      </div>
-
-      {/* Location Titles */}
-      <h3 className="text-sm font-black text-black uppercase tracking-wider mb-1">
-        {location.name}
-      </h3>
-      <p className="text-[10px] text-neutral-400 font-light uppercase tracking-wide mb-4">
-        {location.subtitle}
-      </p>
-
-      {/* Large Digital Clock display */}
-      <div className="w-full bg-white rounded-lg py-3 px-4 shadow-inner border border-neutral-100/50 text-xl sm:text-2xl font-black text-black uppercase tracking-widest font-sans leading-none mb-6">
-        {timeStr || "00:00:00 AM"}
-      </div>
-
-      {/* Details list */}
-      <div className="w-full border-t border-neutral-100/80 pt-4 space-y-2 text-left">
-        <div className="flex justify-between text-[10px] text-neutral-500 font-light">
-          <span className="flex items-center gap-1.5">
-            <Clock className="h-3 w-3 text-neutral-400" /> Operating:
-          </span>
-          <span className="font-semibold text-neutral-800">{location.hours}</span>
+      {/* Header Row: Flag + Type Tag + Status Badge */}
+      <div className="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-neutral-100">
+        <div className="flex items-center gap-2.5">
+          <span className="text-xl leading-none">{location.flag}</span>
+          <div>
+            <span className="text-[9px] font-black uppercase tracking-widest text-neutral-400 font-mono block leading-none">
+              {location.type}
+            </span>
+            <span className="text-[10px] font-bold text-neutral-800 tracking-tight block mt-0.5">
+              {location.country}
+            </span>
+          </div>
         </div>
-        <div className="flex justify-between text-[10px] text-neutral-500 font-light">
-          <span className="flex items-center gap-1.5">
-            <Globe2 className="h-3 w-3 text-neutral-400" /> Zone:
+
+        {/* Live Status Badge */}
+        <span
+          className={`inline-flex items-center gap-1.5 text-[9px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full border transition-colors ${
+            isOpenNow
+              ? 'text-emerald-700 bg-emerald-50 border-emerald-200/80 shadow-2xs'
+              : 'text-neutral-500 bg-neutral-100/80 border-neutral-200/80'
+          }`}
+        >
+          <span className="relative flex h-2 w-2">
+            {isOpenNow && (
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            )}
+            <span
+              className={`relative inline-flex rounded-full h-2 w-2 ${
+                isOpenNow ? 'bg-emerald-500' : 'bg-neutral-400'
+              }`}
+            />
           </span>
-          <span className="font-bold text-neutral-700">{location.tzLabel}</span>
+          {isOpenNow ? 'Active Now' : 'Out of Hours'}
+        </span>
+      </div>
+
+      {/* Main Content: Analog Clock & Digital Clock Side-by-Side */}
+      <div className="flex flex-col sm:flex-row items-center sm:items-stretch gap-6 mb-6">
+        {/* Left: Analog Clock */}
+        <div className="flex items-center justify-center">
+          <AnalogClock timeZone={location.timeZone} />
+        </div>
+
+        {/* Right: Titles + Digital Clock */}
+        <div className="flex-1 text-center sm:text-left flex flex-col justify-center space-y-2">
+          <div>
+            <h3 className="text-base font-black text-black uppercase tracking-tight leading-tight">
+              {location.name}
+            </h3>
+            <p className="text-[10px] font-medium text-neutral-400 uppercase tracking-wider mt-0.5">
+              {location.subtitle}
+            </p>
+          </div>
+
+          {/* Digital Clock Box */}
+          <div className="bg-neutral-950 text-white rounded-xl p-3 text-center sm:text-left shadow-inner border border-neutral-900">
+            <div className="flex items-baseline justify-between gap-2">
+              <span className="text-base sm:text-lg font-medium tracking-wider font-mono text-neutral-100 leading-none">
+                {timeStr || '00:00:00 AM'}
+              </span>
+              <span className="text-[9px] font-normal text-neutral-400 font-mono uppercase">
+                {dateStr}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Footer Details: Operating Hours & Time Zone */}
+      <div className="bg-neutral-50/80 border border-neutral-100 rounded-xl p-3.5 space-y-2 text-xs text-neutral-600">
+        <div className="flex items-center justify-between text-[11px]">
+          <span className="flex items-center gap-1.5 text-neutral-400 font-medium">
+            <Clock className="h-3.5 w-3.5 text-neutral-500" />
+            Desk Hours:
+          </span>
+          <span className="font-bold text-black font-mono">{location.hours}</span>
+        </div>
+
+        <div className="flex items-center justify-between text-[11px]">
+          <span className="flex items-center gap-1.5 text-neutral-400 font-medium">
+            <Globe2 className="h-3.5 w-3.5 text-neutral-500" />
+            Time Standard:
+          </span>
+          <span className="font-bold text-neutral-800 font-mono">{location.tzLabel}</span>
+        </div>
+
+        <div className="flex items-center justify-between text-[10px] pt-1 border-t border-neutral-200/60">
+          <span className="text-neutral-400 font-medium">Scope:</span>
+          <span className="text-neutral-700 font-semibold truncate max-w-[200px]">
+            {location.tagline}
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -227,30 +307,41 @@ export default function TimeSection() {
   if (!mounted) return null;
 
   return (
-    <section className="py-24 bg-white text-black border-b border-neutral-200 relative overflow-hidden">
-      {/* Background soft ambient radial light */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-neutral-50 rounded-full blur-[140px] pointer-events-none"></div>
+    <section className="py-24 bg-[#fafafa] text-black border-b border-neutral-200 relative overflow-hidden">
+      {/* Background ambient radial glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-neutral-200/40 rounded-full blur-[150px] pointer-events-none" />
 
-      <div className="w-full max-w-[92rem] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
-        
-        {/* Section Title */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
         <div className="text-center mb-16 max-w-2xl mx-auto">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-500 block mb-2">
-            Real-Time Operations coordination
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-black uppercase">
-            OUR ACTIVE BUSINESS HOURS
-          </h2>
-          <div className="h-0.5 w-12 bg-black mx-auto mt-4"></div>
+          <AnimatedSection direction="up" delay={0.05}>
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-400 block mb-2 font-mono">
+              Global Desk Synchronization
+            </span>
+          </AnimatedSection>
+
+          <AnimatedSection direction="up" delay={0.1}>
+            <h2 className="text-3xl sm:text-4xl font-black tracking-tight text-black uppercase">
+              LIVE OPERATIONS & TIME ZONES
+            </h2>
+          </AnimatedSection>
+
+          <AnimatedSection direction="up" delay={0.15}>
+            <p className="text-xs sm:text-[13px] text-neutral-500 font-light mt-3 leading-relaxed">
+              Real-time active hours across our Sialkot manufacturing headquarters, UK representative desk, USA fulfillment center, and Canadian showroom.
+            </p>
+            <div className="h-0.5 w-12 bg-black mx-auto mt-4" />
+          </AnimatedSection>
         </div>
 
-        {/* 3-Column Grid for Clocks */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* 2-Column Grid for Clocks (2 Rows x 2 Columns) */}
+        <StaggerContainer delay={0.15} className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {LOCATIONS.map((loc) => (
-            <TimeDisplay key={loc.id} location={loc} />
+            <StaggerItem key={loc.id}>
+              <TimeDisplay location={loc} />
+            </StaggerItem>
           ))}
-        </div>
-
+        </StaggerContainer>
       </div>
     </section>
   );

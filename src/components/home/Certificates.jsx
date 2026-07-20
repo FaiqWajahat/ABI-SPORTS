@@ -15,7 +15,7 @@ const CERTIFICATES = [
     description: "Worldwide Responsible Accredited Production validation ensuring strictly ethical labor laws, fair compensation, safety protocols, and zero-defect worker protection standards.",
     status: "Facility Registry: Active",
     regId: "Facility ID: WRAP-19822",
-    documentImage: "/active-wear.png", // Replace with scanned certificate image
+    documentImage: "/active-wear.png",
     auditAgency: "Worldwide Responsible Accredited Production (USA)"
   },
   {
@@ -26,29 +26,40 @@ const CERTIFICATES = [
     description: "Rigorous 4-Pillar SMETA supply chain audit verifying fair working hours, health & safety compliancy, environmental integrity, and strict business ethics.",
     status: "Member ID: Active",
     regId: "Audit ID: SMETA-S-499321",
-    documentImage: "/team-wear.png", // Replace with scanned certificate image
+    documentImage: "/team-wear.png",
     auditAgency: "SGS Global Audit Operations"
   },
   {
     id: 3,
+    icon: ShieldCheck,
+    title: "Pakistan Accord",
+    scope: "Building & Fire Safety",
+    description: "International Accord for Health and Safety in the Garment Industry certifying workplace safety, structural integrity, and electrical hazard prevention.",
+    status: "Signatory Status: Verified",
+    regId: "Accord ID: PAK-ACCORD-2024",
+    documentImage: "/sialkot-factory.png",
+    auditAgency: "International Accord Secretariat"
+  },
+  {
+    id: 4,
     icon: Leaf,
     title: "GOTS Organic Standard",
     scope: "Organic Material Processing",
     description: "Global Organic Textile Standard certification tracking the sourcing, chemical-free processing, and vertical weaving of 100% organic cotton fibers.",
     status: "Registry ID: Active",
     regId: "Registry: GOTS-G-382210",
-    documentImage: "/active-wear.png", // Replace with scanned certificate image
+    documentImage: "/active-wear.png",
     auditAgency: "Control Union Certifications"
   },
   {
-    id: 4,
+    id: 5,
     icon: CheckSquare,
     title: "ISO 9001:2015 Quality",
-    scope: "Quality Management Systems",
+    scope: "Quality Management",
     description: "Structured quality management standard confirming 100% raw fabric pre-tests, line inspections, tensile stitching checks, and consistent B2B deliveries.",
     status: "Certificate: Active",
     regId: "Standard ID: ISO-9001-2015",
-    documentImage: "/team-wear.png", // Replace with scanned certificate image
+    documentImage: "/team-wear.png",
     auditAgency: "QAS International Compliance"
   }
 ];
@@ -92,8 +103,8 @@ export default function Certificates() {
           </AnimatedSection>
         </div>
 
-        {/* 4-Card Certificates Grid */}
-        <StaggerContainer delay={0.15} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        {/* 5-Card Certificates Grid */}
+        <StaggerContainer delay={0.15} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 max-w-7xl mx-auto">
           {CERTIFICATES.map((cert) => {
             const Icon = cert.icon;
             return (

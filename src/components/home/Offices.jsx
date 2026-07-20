@@ -25,6 +25,23 @@ const FACILITIES = [
     ]
   },
   {
+    id: 'uk',
+    tabLabel: 'UK Office',
+    tag: 'UK Representative',
+    title: 'UK Corporate Office',
+    description: 'Our UK client relations and support desk in Oldham. Coordinates orders, sample approvals, customer inquiries, and logistics support for sportswear brands across the United Kingdom and Europe.',
+    address: '14 Enfield Avenue, OL8 3DW, United Kingdom',
+    phone: '+44 7534 582421',
+    email: 'orders@abisportswear.com',
+    driveLink: 'https://drive.google.com/drive/folders/1FnbF8skbxjJUCfezlU3Zx9bF3cauNmuO?usp=drive_link',
+    mainImage: '/usa-office.png',
+    gallery: [
+      '/usa-office.png',
+      '/sialkot-factory.png',
+      '/canada-office.png'
+    ]
+  },
+  {
     id: 'canada',
     tabLabel: 'Canada Office',
     tag: 'Logistics & Showroom',
@@ -113,13 +130,13 @@ export default function Offices() {
           </AnimatedSection>
           <AnimatedSection direction="up" delay={0.15}>
             <p className="text-xs sm:text-[13px] text-neutral-600 font-light mt-4 leading-relaxed">
-              From our flagship Sialkot factory to our Toronto and New York offices — explore the spaces where Al Badar Impex designs, manufactures, and ships.
+              From our flagship Sialkot factory to our UK, Toronto, and New York offices — explore the spaces where Al Badar Impex designs, manufactures, and ships.
             </p>
           </AnimatedSection>
         </div>
 
         {/* Premium Sliding Tab Switcher (Segmented Control) */}
-        <div className="relative flex bg-neutral-100 p-1.5 rounded-full max-w-md mx-auto mb-14 shadow-inner border border-neutral-200">
+        <div className="relative flex bg-neutral-100 p-1.5 rounded-full max-w-xl mx-auto mb-14 shadow-inner border border-neutral-200">
           {FACILITIES.map((facility) => {
             const isActive = facility.id === activeTab;
             return (

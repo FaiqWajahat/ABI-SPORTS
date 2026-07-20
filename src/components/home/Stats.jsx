@@ -42,7 +42,7 @@ export default function Stats() {
               <Counter from={0} to={15} suffix="+" />
             </span>
             <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mt-1.5">
-              Years Sourcing & Mfg.
+              Years Manufacturing
             </span>
           </div>
 

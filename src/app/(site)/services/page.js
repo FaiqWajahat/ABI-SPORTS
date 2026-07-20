@@ -27,13 +27,7 @@ export default function ServicesPage() {
       {/* 4. Steps Sourcing Process Pipeline */}
       <SourcingProcess />
 
-      {/* 5. Offices & Facilities */}
-      <Offices />
-
-      {/* 6. Certifications */}
-      <Certificates />
-
-      {/* 7. Sourcing FAQ */}
+      {/* 5. FAQ */}
       <FAQ />
     </>
   );

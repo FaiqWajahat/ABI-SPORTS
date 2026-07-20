@@ -44,9 +44,9 @@ export default function AboutHero() {
             {/* 3 pillars */}
             <StaggerContainer delay={0.25} className="flex flex-wrap gap-x-8 gap-y-4 pt-6 border-t border-neutral-200">
               {[
-                "15+ Years of Sourcing",
+                "15+ Years of Manufacturing",
                 "OEM & Private Label Support",
-                "Global Sourcing Markets"
+                "Global Manufacturing Export"
               ].map((item, i) => (
                 <StaggerItem key={i} className="flex items-center space-x-2">
                   <span className="flex-shrink-0 flex items-center justify-center h-4.5 w-4.5 rounded-full border border-black/35">

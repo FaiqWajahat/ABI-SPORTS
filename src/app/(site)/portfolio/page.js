@@ -28,10 +28,7 @@ export default function PortfolioPage() {
       {/* 4. Featured case study — bg-[#f9fafb] */}
       <FeaturedProject />
 
-      {/* 5. About the company + milestone timeline */}
-      <CompanyProfile />
-
-      {/* 6. Redesigned testimonials — featured + sidebar */}
+      {/* 5. Redesigned testimonials — featured + sidebar */}
       <TestimonialsStrip />
 
       {/* 7. Category showcase (black) + How We Work (light) */}

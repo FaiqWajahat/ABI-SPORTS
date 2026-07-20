@@ -40,13 +40,10 @@ export default function ProductionPage() {
 
       {/* 6. Factory floor photo gallery with lightbox */}
       <FactoryGallery />
-      <QualityControl/>
+      <QualityControl />
 
-      {/* 7. Certifications + competitive advantages */}
-      <Certificates/>
-
-      {/* 8. CTA — start your collection */}
-    <FAQ/>
+      {/* 7. FAQ */}
+      <FAQ />
     </>
   );
 }
