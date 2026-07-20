@@ -78,7 +78,7 @@ export default function Stats() {
           {/* Stat 4: Employees */}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <span className="text-3xl sm:text-4xl font-black text-white tracking-tight leading-none font-sans">
-              <Counter from={0} to={650} suffix="+" />
+              <Counter from={0} to={97} suffix="+" />
             </span>
             <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mt-1.5">
               Factory Employees

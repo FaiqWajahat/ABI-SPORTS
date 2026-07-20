@@ -3,9 +3,10 @@ import PortfolioHero      from '@/components/portfolio/PortfolioHero';
 import PortfolioStats     from '@/components/portfolio/ClientLogos';
 import PortfolioGrid      from '@/components/portfolio/PortfolioGrid';
 import FeaturedProject    from '@/components/portfolio/CaseStudy';
-import CompanyProfile     from '@/components/portfolio/CompanyProfile';
+
 import TestimonialsStrip  from '@/components/portfolio/TestimonialsStrip';
 import PortfolioCTA       from '@/components/portfolio/PortfolioCTA';
+import Stats from '@/components/home/Stats';
 
 export const metadata = {
   title: 'Portfolio | Al Badar Impex — Custom Sportswear Manufacturers',
@@ -20,7 +21,8 @@ export default function PortfolioPage() {
       <PortfolioHero />
 
       {/* 2. Animated counter strip — black */}
-      <PortfolioStats />
+      {/* <PortfolioStats /> */}
+      <Stats/>
 
       {/* 3. Filterable gallery — white */}
       <PortfolioGrid />
