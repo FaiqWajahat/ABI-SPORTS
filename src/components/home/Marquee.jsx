@@ -11,7 +11,7 @@ const LOGO_PATHS = [
   '/client-06.png',
   '/client-07.png',
   '/client-08.png',
-  '/client-09.png',
+  '/client-09.jpeg',
   '/client-10.png',
 ];
 
