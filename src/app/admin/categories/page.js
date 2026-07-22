@@ -33,7 +33,15 @@ export default function AdminCategories() {
   const [description, setDescription] = useState('');
   const [parentCategory, setParentCategory] = useState('');
   const [image, setImage] = useState('');
-  const [uploading, setUploading] = useState(false);
+  const [heroHeading, setHeroHeading] = useState('');
+  const [heroSubheading, setHeroSubheading] = useState('');
+  const [heroBgImage, setHeroBgImage] = useState('');
+  const [heroBgVideo, setHeroBgVideo] = useState('');
+  const [heroImage1, setHeroImage1] = useState('');
+  const [heroImage2, setHeroImage2] = useState('');
+  const [heroImage3, setHeroImage3] = useState('');
+  const [uploadingField, setUploadingField] = useState(null);
+  const uploading = !!uploadingField;
   const [formError, setFormError] = useState('');
   const [formSuccess, setFormSuccess] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -81,6 +89,13 @@ export default function AdminCategories() {
     setDescription('');
     setParentCategory('');
     setImage('');
+    setHeroHeading('');
+    setHeroSubheading('');
+    setHeroBgImage('');
+    setHeroBgVideo('');
+    setHeroImage1('');
+    setHeroImage2('');
+    setHeroImage3('');
     setFormError('');
     setFormSuccess('');
     setModalOpen(true);
@@ -95,18 +110,26 @@ export default function AdminCategories() {
     setDescription(cat.description || '');
     setParentCategory(cat.parentCategory?._id || cat.parentCategory || '');
     setImage(cat.image || '');
+    setHeroHeading(cat.heroHeading || '');
+    setHeroSubheading(cat.heroSubheading || '');
+    setHeroBgImage(cat.heroBgImage || '');
+    setHeroBgVideo(cat.heroBgVideo || '');
+    setHeroImage1(cat.heroImage1 || '');
+    setHeroImage2(cat.heroImage2 || '');
+    setHeroImage3(cat.heroImage3 || '');
     setFormError('');
     setFormSuccess('');
     setModalOpen(true);
   };
 
-  // File Upload handler (Cloudinary API route)
-  const handleFileUpload = async (e) => {
+  // Generic File Upload handler (Cloudinary / local upload)
+  const handleGenericFileUpload = async (e, setter, fieldName, label = 'File') => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setUploading(true);
+    setUploadingField(fieldName);
     setFormError('');
+    setFormSuccess('');
 
     const formData = new FormData();
     formData.append('file', file);
@@ -122,12 +145,12 @@ export default function AdminCategories() {
         throw new Error(data.error || 'Upload request failed');
       }
 
-      setImage(data.url);
-      setFormSuccess('Image uploaded successfully');
+      setter(data.url);
+      setFormSuccess(`${label} uploaded successfully`);
     } catch (err) {
-      setFormError(err.message || 'Failed to upload image file');
+      setFormError(err.message || `Failed to upload ${label.toLowerCase()}`);
     } finally {
-      setUploading(false);
+      setUploadingField(null);
     }
   };
 
@@ -150,6 +173,13 @@ export default function AdminCategories() {
       description,
       parentCategory: parentCategory || null,
       image,
+      heroHeading,
+      heroSubheading,
+      heroBgImage,
+      heroBgVideo,
+      heroImage1,
+      heroImage2,
+      heroImage3,
     };
 
     if (modalMode === 'edit') {
@@ -553,9 +583,9 @@ export default function AdminCategories() {
                           <X className="h-3 w-3" />
                         </button>
                       </>
-                    ) : uploading ? (
+                    ) : uploadingField === 'image' ? (
                       <div className="flex flex-col items-center gap-2">
-                        <Loader2 className="h-5 w-5 text-neutral-400 animate-spin" />
+                        <Loader2 className="h-5 w-5 text-neutral-450 animate-spin" />
                         <span className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500">
                           Uploading…
                         </span>
@@ -571,7 +601,7 @@ export default function AdminCategories() {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={handleFileUpload}
+                      onChange={(e) => handleGenericFileUpload(e, setImage, 'image', 'Thumbnail')}
                       className="hidden"
                       disabled={uploading || submitting}
                     />
@@ -584,6 +614,228 @@ export default function AdminCategories() {
                     className="w-full bg-neutral-900/50 border border-neutral-800 focus:border-neutral-600 rounded-lg px-4 py-3 text-xs text-white placeholder-neutral-600 outline-none transition-colors"
                     disabled={submitting}
                   />
+                </div>
+
+                {/* Hero Customize Section */}
+                <div className="border-t border-neutral-900 pt-6 mt-6 space-y-5">
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-neutral-400">
+                    Hero Section Customization
+                  </h4>
+
+                  {/* Hero Heading */}
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500 block">
+                      Hero Title / Heading
+                    </label>
+                    <input
+                      type="text"
+                      value={heroHeading}
+                      onChange={(e) => setHeroHeading(e.target.value)}
+                      placeholder="e.g. PERFORMANCE CYCLING WEAR"
+                      className="w-full bg-neutral-900/50 border border-neutral-800 focus:border-neutral-600 rounded-lg px-4 py-3 text-xs text-white placeholder-neutral-600 outline-none transition-colors"
+                      disabled={submitting}
+                    />
+                  </div>
+
+                  {/* Hero Subheading */}
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500 block">
+                      Hero Description / Tagline
+                    </label>
+                    <textarea
+                      value={heroSubheading}
+                      onChange={(e) => setHeroSubheading(e.target.value)}
+                      placeholder="e.g. Engineered for aerodynamic speed and long endurance comfort…"
+                      rows={2}
+                      className="w-full bg-neutral-900/50 border border-neutral-800 focus:border-neutral-600 rounded-lg px-4 py-3 text-xs text-white placeholder-neutral-600 outline-none resize-none transition-colors"
+                      disabled={submitting}
+                    />
+                  </div>
+
+                  {/* Hero Background Image */}
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500 block">
+                      Hero Background Image
+                    </label>
+                    <label className="relative flex flex-col items-center justify-center w-full h-20 border border-dashed border-neutral-800 hover:border-neutral-600 bg-neutral-900/30 rounded-xl cursor-pointer transition-colors group">
+                      {uploadingField === 'heroBgImage' ? (
+                        <div className="flex flex-col items-center gap-1 text-neutral-400">
+                          <Loader2 className="h-4.5 w-4.5 animate-spin text-neutral-450" />
+                          <span className="text-[8px] font-extrabold uppercase tracking-widest">
+                            Uploading…
+                          </span>
+                        </div>
+                      ) : heroBgImage ? (
+                        <>
+                          <img
+                            src={heroBgImage}
+                            alt="Background Preview"
+                            className="absolute inset-0 w-full h-full object-cover rounded-xl opacity-40"
+                          />
+                          <div className="relative z-10 flex flex-col items-center">
+                            <Check className="h-4 w-4 text-green-400" />
+                            <span className="text-[8px] font-extrabold uppercase tracking-widest text-green-400">
+                              Bg Image Set
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => { e.preventDefault(); setHeroBgImage(''); }}
+                            className="absolute top-1 right-1 z-20 h-5 w-5 bg-black/70 hover:bg-red-900/80 rounded-full flex items-center justify-center text-white transition-colors"
+                          >
+                            <X className="h-2.5 w-2.5" />
+                          </button>
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center gap-1 text-neutral-650 group-hover:text-neutral-500 transition-colors">
+                          <Upload className="h-4 w-4" />
+                          <span className="text-[8px] font-extrabold uppercase tracking-widest">
+                            Upload Background Image
+                          </span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleGenericFileUpload(e, setHeroBgImage, 'heroBgImage', 'Bg Image')}
+                        className="hidden"
+                        disabled={uploading || submitting}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      value={heroBgImage}
+                      onChange={(e) => setHeroBgImage(e.target.value)}
+                      placeholder="Or paste background image URL directly…"
+                      className="w-full bg-neutral-900/50 border border-neutral-800 focus:border-neutral-600 rounded-lg px-4 py-3 text-xs text-white placeholder-neutral-600 outline-none transition-colors"
+                      disabled={submitting}
+                    />
+                  </div>
+
+                  {/* Hero Background Video */}
+                  <div className="space-y-1.5">
+                    <label className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500 block">
+                      Hero Background Video
+                    </label>
+                    <label className="relative flex flex-col items-center justify-center w-full h-20 border border-dashed border-neutral-800 hover:border-neutral-600 bg-neutral-900/30 rounded-xl cursor-pointer transition-colors group">
+                      {uploadingField === 'heroBgVideo' ? (
+                        <div className="flex flex-col items-center gap-1 text-neutral-400">
+                          <Loader2 className="h-4.5 w-4.5 animate-spin text-neutral-450" />
+                          <span className="text-[8px] font-extrabold uppercase tracking-widest">
+                            Uploading…
+                          </span>
+                        </div>
+                      ) : heroBgVideo ? (
+                        <>
+                          <div className="relative z-10 flex flex-col items-center">
+                            <Check className="h-4 w-4 text-green-400" />
+                            <span className="text-[8px] font-extrabold uppercase tracking-widest text-green-400 text-center px-2 truncate max-w-[200px]">
+                              Video: {heroBgVideo.split('/').pop()}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={(e) => { e.preventDefault(); setHeroBgVideo(''); }}
+                            className="absolute top-1 right-1 z-20 h-5 w-5 bg-black/70 hover:bg-red-900/80 rounded-full flex items-center justify-center text-white transition-colors"
+                          >
+                            <X className="h-2.5 w-2.5" />
+                          </button>
+                        </>
+                      ) : (
+                        <div className="flex flex-col items-center gap-1 text-neutral-650 group-hover:text-neutral-500 transition-colors">
+                          <Upload className="h-4 w-4" />
+                          <span className="text-[8px] font-extrabold uppercase tracking-widest">
+                            Upload Background Video
+                          </span>
+                        </div>
+                      )}
+                      <input
+                        type="file"
+                        accept="video/*"
+                        onChange={(e) => handleGenericFileUpload(e, setHeroBgVideo, 'heroBgVideo', 'Bg Video')}
+                        className="hidden"
+                        disabled={uploading || submitting}
+                      />
+                    </label>
+                    <input
+                      type="text"
+                      value={heroBgVideo}
+                      onChange={(e) => setHeroBgVideo(e.target.value)}
+                      placeholder="Or paste background video URL directly…"
+                      className="w-full bg-neutral-900/50 border border-neutral-800 focus:border-neutral-600 rounded-lg px-4 py-3 text-xs text-white placeholder-neutral-600 outline-none transition-colors"
+                      disabled={submitting}
+                    />
+                    <p className="text-[9px] text-neutral-500 leading-normal mt-1">
+                      ⚠️ Note: Stock sites like Pixabay block direct hotlinking (returning a 403 Forbidden error). For best results, download the video to your device first, then click <strong>Upload Background Video</strong> above to host it on Cloudinary.
+                    </p>
+                  </div>
+
+                  {/* Left Column Dynamic Images (Grid cards side elements) */}
+                  <div className="space-y-2">
+                    <label className="text-[9px] font-extrabold uppercase tracking-widest text-neutral-500 block">
+                      Grid Showcase Images (3 Cards)
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { val: heroImage1, set: setHeroImage1, label: 'Image 1' },
+                        { val: heroImage2, set: setHeroImage2, label: 'Image 2' },
+                        { val: heroImage3, set: setHeroImage3, label: 'Image 3' },
+                      ].map((item, idx) => {
+                        const fieldKey = `heroImage${idx + 1}`;
+                        return (
+                          <div key={idx} className="space-y-1">
+                            <label className="relative flex flex-col items-center justify-center w-full h-16 border border-dashed border-neutral-800 hover:border-neutral-600 bg-neutral-900/30 rounded-lg cursor-pointer transition-colors group">
+                              {uploadingField === fieldKey ? (
+                                <div className="flex flex-col items-center gap-0.5 text-neutral-400">
+                                  <Loader2 className="h-3.5 w-3.5 animate-spin text-neutral-450" />
+                                  <span className="text-[7px] font-extrabold uppercase tracking-widest">
+                                    Uploading…
+                                  </span>
+                                </div>
+                              ) : item.val ? (
+                                <>
+                                  <img
+                                    src={item.val}
+                                    alt="Card preview"
+                                    className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-40"
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={(e) => { e.preventDefault(); item.set(''); }}
+                                    className="absolute top-0.5 right-0.5 z-20 h-4 w-4 bg-black/70 hover:bg-red-900/80 rounded-full flex items-center justify-center text-white transition-colors"
+                                  >
+                                    <X className="h-2 w-2" />
+                                  </button>
+                                </>
+                              ) : (
+                                <div className="flex flex-col items-center text-center p-1 text-neutral-650 group-hover:text-neutral-500">
+                                  <Upload className="h-3.5 w-3.5" />
+                                  <span className="text-[7px] font-extrabold uppercase tracking-widest mt-0.5">
+                                    {item.label}
+                                  </span>
+                                </div>
+                              )}
+                              <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => handleGenericFileUpload(e, item.set, fieldKey, item.label)}
+                                className="hidden"
+                                disabled={uploading || submitting}
+                              />
+                            </label>
+                            <input
+                              type="text"
+                              value={item.val}
+                              onChange={(e) => item.set(e.target.value)}
+                              placeholder="URL…"
+                              className="w-full bg-neutral-900/50 border border-neutral-800 rounded px-1.5 py-1 text-[8px] text-white placeholder-neutral-700 outline-none truncate"
+                              disabled={submitting}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
 
                 {/* Submit */}

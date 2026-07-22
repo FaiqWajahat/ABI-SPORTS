@@ -7,6 +7,7 @@ import FeaturedProject    from '@/components/portfolio/CaseStudy';
 import TestimonialsStrip  from '@/components/portfolio/TestimonialsStrip';
 import PortfolioCTA       from '@/components/portfolio/PortfolioCTA';
 import Stats from '@/components/home/Stats';
+import Marquee from '@/components/home/Marquee';
 
 export const metadata = {
   title: 'Portfolio | Al Badar Impex — Custom Sportswear Manufacturers',
@@ -29,12 +30,13 @@ export default function PortfolioPage() {
 
       {/* 4. Featured case study — bg-[#f9fafb] */}
       <FeaturedProject />
+      <Marquee/>
 
       {/* 5. Redesigned testimonials — featured + sidebar */}
       <TestimonialsStrip />
 
       {/* 7. Category showcase (black) + How We Work (light) */}
-      <PortfolioCTA />
+      {/* <PortfolioCTA /> */}
     </>
   );
 }

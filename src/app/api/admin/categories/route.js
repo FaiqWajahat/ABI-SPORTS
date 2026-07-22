@@ -35,7 +35,11 @@ export async function POST(req) {
     checkAuth(req);
     await connectDB();
     const body = await req.json();
-    const { name, slug, description, parentCategory, image } = body;
+    const { 
+      name, slug, description, parentCategory, image,
+      heroHeading, heroSubheading, heroBgImage, heroBgVideo,
+      heroImage1, heroImage2, heroImage3
+    } = body;
 
     if (!name || !slug) {
       return NextResponse.json({ error: 'Name and slug are required' }, { status: 400 });
@@ -47,6 +51,13 @@ export async function POST(req) {
       description,
       parentCategory: parentCategory || null,
       image: image || '',
+      heroHeading: heroHeading || '',
+      heroSubheading: heroSubheading || '',
+      heroBgImage: heroBgImage || '',
+      heroBgVideo: heroBgVideo || '',
+      heroImage1: heroImage1 || '',
+      heroImage2: heroImage2 || '',
+      heroImage3: heroImage3 || '',
     });
 
     return NextResponse.json({ success: true, category });
@@ -64,7 +75,11 @@ export async function PUT(req) {
     checkAuth(req);
     await connectDB();
     const body = await req.json();
-    const { id, name, slug, description, parentCategory, image } = body;
+    const { 
+      id, name, slug, description, parentCategory, image,
+      heroHeading, heroSubheading, heroBgImage, heroBgVideo,
+      heroImage1, heroImage2, heroImage3
+    } = body;
 
     if (!id || !name || !slug) {
       return NextResponse.json({ error: 'ID, name and slug are required' }, { status: 400 });
@@ -78,6 +93,13 @@ export async function PUT(req) {
         description,
         parentCategory: parentCategory || null,
         image: image || '',
+        heroHeading: heroHeading || '',
+        heroSubheading: heroSubheading || '',
+        heroBgImage: heroBgImage || '',
+        heroBgVideo: heroBgVideo || '',
+        heroImage1: heroImage1 || '',
+        heroImage2: heroImage2 || '',
+        heroImage3: heroImage3 || '',
       },
       { new: true }
     );

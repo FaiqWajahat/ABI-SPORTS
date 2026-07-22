@@ -28,8 +28,40 @@ const CategorySchema = new mongoose.Schema(
       type: String, // URL to category image
       default: '',
     },
+    heroHeading: {
+      type: String,
+      default: '',
+    },
+    heroSubheading: {
+      type: String,
+      default: '',
+    },
+    heroBgImage: {
+      type: String,
+      default: '',
+    },
+    heroBgVideo: {
+      type: String,
+      default: '',
+    },
+    heroImage1: {
+      type: String,
+      default: '',
+    },
+    heroImage2: {
+      type: String,
+      default: '',
+    },
+    heroImage3: {
+      type: String,
+      default: '',
+    },
   },
   { timestamps: true }
 );
+
+if (mongoose.models && mongoose.models.Category) {
+  delete mongoose.models.Category;
+}
 
 export default mongoose.models.Category || mongoose.model('Category', CategorySchema);
